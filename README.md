@@ -1,9 +1,8 @@
 # Lockerbeast
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+LockerBeast is a user driven website for the lacrosse community to share recommendations, review gear and sell their own products at no charge. It is being developed over Ember.js, an excellent JavaScript framework for building ambitious apps.
 
-## Prerequisites
+## Contributing to development?
 
 You will need the following things properly installed on your computer.
 
@@ -15,19 +14,14 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
+* `git clone https://github.com/mrosata/lockerbeast.git` this repository
+* `cd lockerbeast`
+* `npm i && bower i`
 
 ## Running / Development
 
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
+* `ember s`
+* Visit [http://localhost:4200](http://localhost:4200).
 
 ### Running Tests
 
@@ -36,18 +30,9 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Building
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+* `ember b` (development)
+* `ember b --environment production` (production)
 
 ### Deploying
 
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
+Coming soon.

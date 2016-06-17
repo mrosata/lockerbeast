@@ -1,7 +1,7 @@
 {
   "name": "lockerbeast",
   "version": "0.0.0",
-  "description": "Small description for lockerbeast goes here",
+  "description": "LockerBeast is a webapp for the lacrosse community to sell/review products and share recommendations",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -12,7 +12,7 @@
     "start": "ember server",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/mrosata/lockerbeast.git",
   "engines": {
     "node": ">= 0.10.0"
   },
