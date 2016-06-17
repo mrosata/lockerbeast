@@ -1,6 +1,6 @@
 {
   "name": "lockerbeast",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "LockerBeast is a webapp for the lacrosse community to sell/review products and share recommendations",
   "private": true,
   "directories": {
@@ -16,7 +16,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Michael Rosata - mrosata",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
