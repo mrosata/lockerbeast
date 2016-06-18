@@ -1,4 +1,5 @@
 /* jshint node: true */
+const config = require('./config');
 
 module.exports = function(environment) {
   var ENV = {
@@ -6,6 +7,11 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+
+    firebase: (config.firebase || ''),
+    torii: {
+      sessionServiceName: 'session'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

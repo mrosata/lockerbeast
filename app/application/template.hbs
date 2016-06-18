@@ -2,24 +2,18 @@
 
 {{site-header}}
 
-
-
-{{carousel-slider class="container"}}
-
-
-
-
 <div class="container">
-    <div class="row">
+  {{#if session.isAuthenticated}}
+      <h3>authenticated</h3>
 
-        {{blocks-section class="col-lg-9 col-md-12"}}
+  {{else}}
 
-      {{aside-feed}}
-    </div>
+      <h3>Welcome!</h3>
+    {{welcome.signup-form}}
+
+  {{/if}}
 </div>
-
-
 
 {{ad-banner}}
 
-{{site-footer}}
+{{site-footer minimal=true}}
