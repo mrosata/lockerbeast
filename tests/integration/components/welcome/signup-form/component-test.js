@@ -1,24 +1,97 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
+import Em from 'ember';
+
 
 moduleForComponent('welcome/signup-form', 'Integration | Component | welcome/signup form', {
   integration: true
 });
 
-test('it renders', function(assert) {
+
+// These are all the selectors for the signup form
+const selectors = {
+  form: 'form[name="create-account"]',
+  email: 'input[name="email"]',
+  firstName: 'input[name="first-name"]',
+  lastName: 'input[name="last-name"]',
+  birthday: 'input[name="birthday"]',
+  username: 'input[name="username"]',
+  createPassword: 'input[name="password"]',
+  confirmPassword: 'input[name="confirm-password"]',
+  gender: 'input[name="gender"]'
+};
+
+
+
+test('it renders the title properly', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
   this.render(hbs`{{welcome/signup-form}}`);
-
-  assert.equal(this.$().text().trim(), '');
+  assert.notEqual(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#welcome/signup-form}}
-      template block text
+    {{#welcome/signup-form title='Test title wakka wakka'}}
+      ------------------------><---------------------
     {{/welcome/signup-form}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.headline-row .title').text().trim(), 'Test title wakka wakka');
+});
+
+
+
+
+test('it triggers the onSubmitForm action upon submission', function(assert) {
+
+  assert.expect(3);
+
+  let expected = {
+    email: 'mike@mcool.com',
+    username: 'mikemcool',
+    firstName: 'Mike',
+    lastName: 'Mcool',
+    birthday: '1990-12-12',
+    password: 'pass',
+    gender: 'male'
+  };
+
+  this.set('actions', Em.Object.create());
+  this.set('onSubmitForm', (actual = {}) => {
+    let actualParsed = {
+      email: actual.get('email'),
+      username: actual.get('username'),
+      firstName: actual.get('firstName'),
+      lastName: actual.get('lastName'),
+      birthday: actual.get('birthday'),
+      password: actual.get('createPassword'),
+      gender: actual.get('gender')
+    };
+    assert.equal(actualParsed, expected, 'Passes correct data to onFormSubmit handlers');
+  });
+
+
+  this.set('formValues', Em.Object.create());
+
+  this.render(hbs`{{welcome/signup-form handleSubmitForm=onSubmitForm formValues=formValues}}`);
+
+  assert.equal(this.$('button[type=submit]').attr('disabled'), 'disabled', 'Form should not be ready before filled out');
+
+  // Fill out the form
+  this.set('formValues.email', expected.email);
+  this.set('formValues.username', expected.username);
+  this.set('formValues.firstName', expected.firstName);
+  this.set('formValues.lastName', expected.lastName);
+  this.set('formValues.birthday', expected.birthday);
+  this.set('formValues.createPassword', expected.createPassword);
+  this.set('formValues.confirmPassword', expected.confirmPassword);
+  this.set('formValues.gender', expected.gender);
+
+  assert.equal(this.$('button[type=submit]').attr('disabled'), undefined, 'Form should be ready with all fields filled out correctly');
+
+  //this.$('form[name="create-account"]').trigger('submit');
+  this.$('button[type=submit]').click();
+
 });

@@ -2,12 +2,12 @@
 
 
 <div class="row">
-    {{welcome.signup-form}}
+    {{welcome.signup-form title="Sign-Up"}}
 </div>
 
 
 <div class="row">
-    Already a member? {{#link-to "welcome.index" class=""}}Click here to login.{{/link-to}}
+    Already a member? {{#link-to "welcome.index" title="Sign-Up" onSubmitForm='createNewUserFromForm ' class=""}}Click here to login.{{/link-to}}
     <br>
 </div>
 

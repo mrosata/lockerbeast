@@ -1,54 +1,71 @@
 import Em from 'ember';
 
+const birthdayRE = /\d{4}-\d{2}-\d{2}/;
+
 export default Em.Component.extend({
 
   classNames: ['col-md-12', 'section-post-comment'],
+  title: 'Sign-up',
 
-  formIsReady: Em.computed('confirmedPass', 'email', 'username', function() {
+  /**
+   * Because components are singletons, we should re-create the field values any
+   * time that the form is re-inserted on the page
+   */
+  willInsertElement() {
+    this._super(...arguments);
+    Em.run.once(() => {
+      this.set('formValues', Em.Object.create({
+        email: '',
+        username: '',
+        firstName: '',
+        lastName: '',
+        birthday: '',
+        gender: 'unspecified',
+        // These are just the field values.
+        createPassword: '',
+        confirmPassword: ''
+      }));
+    });
+  },
 
-    if (!this.get('username') || this.get('username.length') < 4) {
-      return false;
+
+  /**
+   * Computed property which reflects whether the form has been completely filled out.
+   * //TODO: Better validation would be nice. IE: Email
+   */
+  submitIsDisabled: Em.computed('formValues.createPassword', 'formValues.confirmPassword', 'formValues.username',
+    'formValues.firstName', 'formValues.lastName', 'formValues.birthday', 'formValues.email', 'formValues.gender',
+    function() {
+
+      if (!this.get('formValues.username') || this.get('formValues.username.length') < 4) {
+        return true;
+      }
+      if (this.get('formValues.confirmPassword') !== this.get('formValues.createPassword') || this.get('formValues.confirmPassword') < 4 ) {
+        return true;
+      }
+
+      // If the function hasn't returned yet then the only value left to test is birthday
+      return !this.get('formValues.birthday').match(birthdayRE);
+    }),
+
+
+  /**
+   * Send submitted form data out to handler.
+   * Triggered from action fired on submit.
+   *
+   * @returns {void}
+   * @private
+   */
+  _sendSubmitForm() {
+    // Send the formValues out to be handled by external container.
+    this.sendAction('handleSubmitForm', this.get('formValues'));
+  },
+
+
+  actions: {
+    onSubmitForm() {
+      this._sendSubmitForm(...arguments);
     }
-    if (!this.get('password.length') || !this.get('confirmPassword.length') ) {
-      return false;
-    }
-    if (this.get('password.length') < 4 || this.get('confirmPassword.length') < 4 ) {
-      return false;
-    }
-    if (this.get('password') !== this.get('confirmPassword')) {
-      return false;
-    }
-
-    if (this.get('birthday') !== '') {
-      //TODO: Get Ember validation for fields like this (if we keep the form that is).
-      return false;
-    }
-
-    return true;
-
-  }),
-
-  confirmedPass: Em.computed('password', 'confirmPassword', function() {
-    return this.get('password') === this.get('confirmPassword') ? this.get('password') : null;
-  }),
-
-  signUpUser() {
-
-    if (!this.get('formIsReady')) {
-      return false;
-    }
-    let newUser = {
-      password: this.get('confirmedPass'),
-      firstName: this.get('firstName'),
-      lastName: this.get('lastName'),
-      birthday: this.get('birthday'),
-      username: this.get('username'),
-      country: this.get('country'),
-      gender: ( this.get('gender') || 'unspecified' ),
-      email: this.get('email')
-    };
-
-    this.sendAction('signUpUser', newUser);
   }
 });
 

@@ -1,81 +1,122 @@
+{{yield}}
 <!-- HEADLINE -->
 <div class="headline-row">
-    <h1 class="section-title caticon sbx"><i>C</i><span class="sport"></span>Sign-up</h1>
+    <h1 class="section-title caticon sbx"><i>C</i><span class="sport"></span><span class="title">{{title}}</span></h1>
 </div>
 
 
 <div class="row">
     <div class="col-md-8">
-        <form class="signup-form form-horizontal" {{action "signUpUser" on="submit"}}>
+        <form class="signup-form form-horizontal" name="create-account" {{action 'onSubmitForm' on='submit'}}>
+          {{!
+            //==========================================================
+            // Users can sign up for an account using this form.
+            // Below is a list of inputs html names and Ember
+            // property accessible through the component.
+            // Acceptance: /tests/acceptance/welcome-test.js
+            //
+            // When all fields are filled in properly the CP
+            // formIsReady should equal true
+            //
+            // form[name="create-account"]         onsubmit='signUpUser'
+            //     input[name="email"]             email
+            //     input[name="first-name"]        firstName
+            //     input[name="last-name"]         lastName
+            //     input[name="birthday"]          birthday
+            //     input[name="username"]          username
+            //     input[name="password"]          password
+            //     input[name="confirm-password"]  confirmPassword
+            //     input[name="gender"]            gender
+            //
+            //==========================================================
+          }}
             <div class="form-group">
-                <label class="col-sm-2 control-label">Email</label>
+                <label class="col-sm-2 control-label">Email: </label>
                 <div class="col-sm-10">
-                  {{input type="text" id="email" placeholder="Email" class="form-control" value=email}}
-                </div>
-            </div>
-            <div class="form-group">
-
-                <label for="firstName" class="col-sm-2 control-label">First name</label>
-                <div class="col-sm-10">
-                  {{input type="text" id="firstName" placeholder="First Name" class="form-control" value=firstName}}
-                </div>
-
-                <label for="lastName" class="col-sm-2 control-label">Last name</label>
-                <div class="col-sm-10">
-                  {{input type="text" id="lastName" placeholder="Last Name" class="form-control" value=lastName}}
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label for="birthday" class="col-sm-2 control-label">Birthday</label>
-                <div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
-                  {{jquery-ui.datepicker buttonText="Birthday" placeholder="Birthday" changeYear=true defaultDate="01/01/2000" value=birthday}}
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="username" class="col-sm-2 control-label">Username</label>
-                <div class="col-sm-10">
-                  {{input type="text" placeholder="Username" class="form-control" value=username}}
+                  {{input type="text" name="email" placeholder="Email" class="form-control" value=formValues.email}}
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="password" class="col-sm-2 control-label">Password</label>
+                <label for="firstName" class="col-sm-2 control-label">First name: </label>
                 <div class="col-sm-10">
-                  {{input type="password" placeholder="Password" class="form-control" value=password}}
+                  {{input type="text" name="first-name" placeholder="First Name" class="form-control" value=formValues.firstName}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName" class="col-sm-2 control-label">Last name: </label>
+                <div class="col-sm-10">
+                  {{input type="text" name="last-name" placeholder="Last Name" class="form-control" value=formValues.lastName}}
                 </div>
             </div>
 
 
             <div class="form-group">
-                <label for="confirmpass" class="col-sm-2 control-label">Repeat Password</label>
+                <label for="birthday" class="col-sm-2 control-label">Birthday: </label>
                 <div class="col-sm-10">
-                  {{input type="password" placeholder="Confirm Password" class="form-control" value=confirmPassword}}
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-8 ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset">
+                          {{jquery-ui.datepicker
+                          defaultDate="1994-01-01"
+                          buttonText="Birthday"
+                          placeholder="Birthday"
+                          name="birthday"
+                          class="form-control"
+                          dateFormat="yy-mm-dd"
+                          changeYear=true
+                          value=formValues.birthday}}
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="gender">Gender</label>
+                <label for="username" class="col-sm-2 control-label">Username: </label>
+                <div class="col-sm-10">
+                  {{input type="text" name="username" placeholder="Username" class="form-control" value=formValues.username}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="create-password" class="col-sm-2 control-label">Password: </label>
+                <div class="col-sm-10">
+                  {{input type="password" name="create-password" placeholder="Password" class="form-control" value=formValues.createPassword}}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="confirmpass" class="col-sm-2 control-label">Repeat Password: </label>
+                <div class="col-sm-10">
+                  {{input type="password" name="confirm-password" placeholder="Confirm Password" class="form-control" value=formValues.confirmPassword}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender: </label>
                 <div class="row">
 
                     <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
                       {{#radio-button
-                      radioId="gender-male"
                       radioClass="form-control"
+                      radioId="gender-male"
+                      groupValue=formValues.gender
+                      name="gender"
                       value="male"
-                      groupValue=gender}}
+                      }}
                           Male
                       {{/radio-button}}
                     </div>
 
                     <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
                       {{#radio-button
-                      radioId="gender-female"
                       radioClass="form-control"
+                      radioId="gender-female"
+                      groupValue=formValues.gender
                       value="female"
-                      groupValue=gender}}
+                      name="gender"
+                      }}
                           Female
                       {{/radio-button}}
                     </div>
@@ -84,7 +125,9 @@
                       radioId="gender-unspecified"
                       radioClass="form-control"
                       value="unspecified"
-                      groupValue=gender}}
+                      groupValue=formValues.gender
+                      name="gender"
+                      }}
                           Unspecified
                       {{/radio-button}}
                     </div>
@@ -94,12 +137,11 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-4">
-                    {{#if formIsReady}}
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    {{else}}
-                        <button type="submit" disabled="disabled" class="btn btn-primary btn-disabled">Submit</button>
-                    {{/if}}
-
+                  {{#if submitIsDisabled}}
+                      <button type="submit" disabled class="btn btn-primary" >Submit</button>
+                  {{else}}
+                      <button type="submit" class="btn btn-primary" {{action 'onSubmitForm' on='click'}}>Submit</button>
+                  {{/if}}
                 </div>
             </div>
 

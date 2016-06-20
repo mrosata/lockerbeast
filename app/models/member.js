@@ -24,6 +24,8 @@ export default Model.extend({
    * "firstName lastName"
    */
   fullName: Em.computed('firstName', 'lastName', function() {
-    return `${this.get('firstName')} ${this.get('lastName')}`;
+    let firstName = this.get('firstName') || '';
+    let lastName = this.get('lastName') || '';
+    return `${firstName} ${lastName}`.trim();
   })
 });

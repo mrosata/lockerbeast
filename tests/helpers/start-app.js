@@ -2,6 +2,9 @@ import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
 
+// Custom Helpers
+import './should-have-element-with-count';
+
 export default function startApp(attrs) {
   let application;
 

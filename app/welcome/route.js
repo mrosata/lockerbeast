@@ -2,7 +2,7 @@ import Em from 'ember';
 import Firebase from 'firebase';
 import config from '../config/environment';
 
-const { A, Logger } = Em;
+const { Logger } = Em;
 const FB_ROOT = config.firebase;
 
 export default Em.Route.extend({
@@ -36,11 +36,7 @@ export default Em.Route.extend({
 
 
     signUpUser (newUser) {
-      /*this.checkUserForm();
-       this.createNewUser();
-       this.createUserProfile();
-       */
-      const controller = this.controllerFor('welcome.signup');
+      //const controller = this.controllerFor('welcome.signup');
       const fire = new Firebase(FB_ROOT),
             self = this;
 
