@@ -11,7 +11,7 @@ const selectors = {
   lastName: 'input[name="last-name"]',
   birthday: 'input[name="birthday"]',
   username: 'input[name="username"]',
-  password: 'input[name="password"]',
+  password: 'input[name="create-password"]',
   confirmPassword: 'input[name="confirm-password"]',
   gender: 'input[name="gender"]'
 };

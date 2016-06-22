@@ -1,27 +1,17 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 import Em from 'ember';
 
 
 moduleForComponent('welcome/signup-form', 'Integration | Component | welcome/signup form', {
-  integration: true
+  integration: true,
+  beforeEach() {
+
+  },
+  afterEach() {
+
+  }
 });
-
-
-// These are all the selectors for the signup form
-const selectors = {
-  form: 'form[name="create-account"]',
-  email: 'input[name="email"]',
-  firstName: 'input[name="first-name"]',
-  lastName: 'input[name="last-name"]',
-  birthday: 'input[name="birthday"]',
-  username: 'input[name="username"]',
-  createPassword: 'input[name="password"]',
-  confirmPassword: 'input[name="confirm-password"]',
-  gender: 'input[name="gender"]'
-};
-
 
 
 test('it renders the title properly', function(assert) {
@@ -40,7 +30,6 @@ test('it renders the title properly', function(assert) {
 
   assert.equal(this.$('.headline-row .title').text().trim(), 'Test title wakka wakka');
 });
-
 
 
 
@@ -69,7 +58,8 @@ test('it triggers the onSubmitForm action upon submission', function(assert) {
       password: actual.get('createPassword'),
       gender: actual.get('gender')
     };
-    assert.equal(actualParsed, expected, 'Passes correct data to onFormSubmit handlers');
+
+    assert.deepEqual(actualParsed, expected, 'Passes correct data to onFormSubmit handlers');
   });
 
 
@@ -85,13 +75,15 @@ test('it triggers the onSubmitForm action upon submission', function(assert) {
   this.set('formValues.firstName', expected.firstName);
   this.set('formValues.lastName', expected.lastName);
   this.set('formValues.birthday', expected.birthday);
-  this.set('formValues.createPassword', expected.createPassword);
-  this.set('formValues.confirmPassword', expected.confirmPassword);
+  this.set('formValues.createPassword', expected.password);
+  this.set('formValues.confirmPassword', expected.password);
   this.set('formValues.gender', expected.gender);
 
   assert.equal(this.$('button[type=submit]').attr('disabled'), undefined, 'Form should be ready with all fields filled out correctly');
 
-  //this.$('form[name="create-account"]').trigger('submit');
   this.$('button[type=submit]').click();
 
 });
+
+
+

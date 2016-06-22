@@ -3,15 +3,9 @@
 {{site-header}}
 
 <div class="container">
-  {{#if session.isAuthenticated}}
-      <h3>authenticated</h3>
 
-  {{else}}
+    {{outlet}}
 
-      <h3>Welcome!</h3>
-    {{welcome.signup-form}}
-
-  {{/if}}
 </div>
 
 {{ad-banner}}

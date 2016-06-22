@@ -47,24 +47,19 @@ export default Em.Component.extend({
       // If the function hasn't returned yet then the only value left to test is birthday
       return !this.get('formValues.birthday').match(birthdayRE);
     }),
-
-
-  /**
-   * Send submitted form data out to handler.
-   * Triggered from action fired on submit.
-   *
-   * @returns {void}
-   * @private
-   */
-  _sendSubmitForm() {
-    // Send the formValues out to be handled by external container.
-    this.sendAction('handleSubmitForm', this.get('formValues'));
-  },
-
+  
 
   actions: {
+
+    /**
+     * Send submitted form data out to handler.
+     * Triggered from action fired on submit.
+     *
+     * @returns {void}
+     * @private
+     */
     onSubmitForm() {
-      this._sendSubmitForm(...arguments);
+      this.sendAction('onSubmitForm', this.get('formValues'));
     }
   }
 });

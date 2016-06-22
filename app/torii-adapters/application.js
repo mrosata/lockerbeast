@@ -13,13 +13,10 @@ export default Em.Object.extend({
    * @return {Promise}
    */
   open(authentication) {
-    let store = this.get('store');
-
     return Em.RSVP.resolve({
       provider: authentication.provider,
       uid: authentication.uid,
-      currentUser: authentication[authentication.provider],
-      user: store.find('member', authentication.uid)
+      currentUser: authentication[authentication.provider]
     });
   },
 
