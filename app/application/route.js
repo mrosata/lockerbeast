@@ -2,25 +2,19 @@ import Em from 'ember';
 
 export default Em.Route.extend({
 
-  /**
-   * Check if the user is logged in.
-   * @return {[type]}  [description]
-   */
-  beforeModel( ) {
-    this.get('session').fetch('firebase')
-      .catch(() => this.transitionTo('welcome'))
-      .then(() => this.transitionTo('application'));
-  },
-
-  accessDenied( ) {
-    this.transitionTo('welcome');
-  },
-
   actions: {
     logout( ) {
-      this.get('session').close().then(() => {
-        this.accessDenied();
-      });
+      this.get('session').close().then(() => this.transitionTo('welcome'));
+    },
+
+    /**
+     * accessDenied is an action which is sent from the Torii
+     * authentication adapter when a user isn't logged in. In
+     * router.js use `this.authenticatedRoute()` in place of
+     * `this.route()` to automate this behaviour.
+     */
+    accessDenied( ) {
+      this.transitionTo('welcome');
     }
   }
 

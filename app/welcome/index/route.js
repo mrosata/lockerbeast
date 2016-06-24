@@ -18,6 +18,7 @@ export default Em.Route.extend({
         .catch(error => {
           // Catch errors propigated from within promise chain.
           Em.Logger.error("Error in Promise Chain User/UserProfile Creation", error);
+          
           // Handle User Creation Error
           for (const err of error.errors) {
             alert(err.message);

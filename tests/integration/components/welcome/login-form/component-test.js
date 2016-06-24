@@ -47,7 +47,6 @@ test('it triggers the onSubmitForm action upon submission', function(assert) {
   this.set('formValues.username', expected.username);
   this.set('formValues.password', expected.password);
 
-  Em.Logger.info(this.get('formValues'));
   assert.equal(this.$('button[type=submit]').attr('disabled'), undefined, 'Form should be ready when all fields filled out');
 
   this.$('button[type=submit]').click();

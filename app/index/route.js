@@ -1,9 +1,12 @@
-import Em from 'ember';
+import Ember from 'ember';
 
-export default Em.Route.extend({
-
+export default Ember.Route.extend({
+  
+  /**
+   * Check if the user is logged in.
+   * @return {[type]}  [description]
+   */
   beforeModel(){
-
     if ( !this.get( 'session.isAuthenticated' )) {
       this.transitionTo('welcome');
     }

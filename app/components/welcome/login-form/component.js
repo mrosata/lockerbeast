@@ -25,10 +25,10 @@ export default Em.Component.extend({
    */
   loginIsDisabled: Em.computed('formValues.password', 'formValues.username',
     function() {
-      if (!this.get('formValues.username') || this.get('formValues.username.length') < 4) {
+      if (!this.get('formValues.username') || this.get('formValues.username.length') < 6) {
         return true;
       }
-      return !this.get('formValues.password') && this.get('formValues.password') >= 6;
+      return !this.get('formValues.password') || this.get('formValues.password.length') < 6;
     }),
 
 

@@ -4,20 +4,28 @@ import { belongsTo } from 'ember-data/relationships';
 import Em from 'ember';
 
 export default Model.extend({
-  firstName: attr(),
-  lastName: attr(),
-  username: attr(),
+  firstName: attr('string'),
+  lastName: attr('string'),
+  username: attr('string'),
   birthday: attr(),
   gender: attr('string', 'unspecified'),
   rank: attr('number'),
-  email: attr(),
-  bio: attr(),
-  photo: attr(),
-  background: attr(),
+  email: attr('string'),
+
+  bio: attr('string', {
+    defaultValue: ''
+  }),
+  photo: attr('string', {
+    defaultValue: ''
+  }),
+  background: attr('string', {
+    defaultValue: ''
+  }),
 
   social: belongsTo('member-social'),
-
-  public: attr('boolean'),
+  public: attr('boolean', {
+    defaultValue: true
+  }),
 
   /**
    * fullName -- computed value
