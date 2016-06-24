@@ -3,7 +3,8 @@
     "document",
     "window",
     "moment",
-    "-Promise"
+    "-Promise",
+    "firebase"
   ],
   "browser": true,
   "boss": true,

@@ -2,6 +2,11 @@
 
 {{site-header}}
 
+
+{{#if session.isAuthenticated}}
+  <button class="logout btn btn-warning rounded" {{action 'logout' on='click'}}>Logout</button>
+{{/if}}
+
 <div class="container">
 
     {{outlet}}

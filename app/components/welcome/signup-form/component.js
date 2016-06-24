@@ -21,7 +21,6 @@ export default Em.Component.extend({
         lastName: '',
         birthday: '',
         gender: 'unspecified',
-        // These are just the field values.
         createPassword: '',
         confirmPassword: ''
       }));
@@ -47,7 +46,7 @@ export default Em.Component.extend({
       // If the function hasn't returned yet then the only value left to test is birthday
       return !this.get('formValues.birthday').match(birthdayRE);
     }),
-  
+
 
   actions: {
 
@@ -59,6 +58,8 @@ export default Em.Component.extend({
      * @private
      */
     onSubmitForm() {
+      // Make a regular `password` property.
+      this.set('formValues.password', this.get('formValues.createPassword'));
       this.sendAction('onSubmitForm', this.get('formValues'));
     }
   }

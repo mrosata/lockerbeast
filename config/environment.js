@@ -8,7 +8,7 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
 
-    firebase: (config.firebase || ''),
+    firebase: config.firebase,
     torii: {
       sessionServiceName: 'session'
     },

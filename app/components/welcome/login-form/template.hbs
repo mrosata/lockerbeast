@@ -1,0 +1,51 @@
+{{yield}}
+
+<!-- HEADLINE -->
+<div class="headline-row">
+    <h1 class="section-title caticon sbx"><i>LB</i><span class="sport"></span><span class="title">{{title}}</span></h1>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <form class="login-form form-horizontal" name="login-account" {{action 'onLoginSubmit' on='submit'}}>
+          {{!
+            //==========================================================
+            // Users can sign up for an account using this form.
+            // Below is a list of inputs html names and Ember
+            // property accessible through the component.
+            // Acceptance: /tests/acceptance/welcome-test.js
+            //
+            // When all fields are filled in properly the CP
+            // formIsReady should equal true
+            //
+            // form[name="login-account"]         onsubmit='onLoginSubmit'
+            //     input[name="username"]          username
+            //     input[name="password"]          password
+            //
+            //==========================================================
+          }}
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">Username: </label>
+                <div class="col-sm-10">
+                  {{input type="text" name="username" placeholder="Username" class="form-control" value=formValues.username}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-sm-2 control-label">Password: </label>
+                <div class="col-sm-10">
+                  {{input type="password" name="password" placeholder="Password" class="form-control" value=formValues.password}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary" disabled={{if loginIsDisabled true null}} {{action 'onLoginSubmit' on='click'}}>Login</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>

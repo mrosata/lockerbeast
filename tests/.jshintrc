@@ -22,7 +22,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "shouldHaveElementWithCount"
+    "shouldHaveElementWithCount",
+    "firebase"
   ],
   "node": false,
   "browser": false,

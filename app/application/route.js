@@ -7,27 +7,20 @@ export default Em.Route.extend({
    * @return {[type]}  [description]
    */
   beforeModel( ) {
-    this.checkLogin()
-      .catch((/*err*/) => {
-        /* We are not logged in (there is no session) */
-        this.transitionTo('welcome.index');
-      });
+    this.get('session').fetch('firebase')
+      .catch(() => this.transitionTo('welcome'))
+      .then(() => this.transitionTo('application'));
   },
 
-
-  checkLogin( ) {
-    return this.get('session').fetch();
+  accessDenied( ) {
+    this.transitionTo('welcome');
   },
 
   actions: {
     logout( ) {
-      this.get('session').close().then(function() {
+      this.get('session').close().then(() => {
         this.accessDenied();
       });
-    },
-
-    accessDenied( ) {
-      this.transitionTo('welcome');
     }
   }
 

@@ -1,61 +1,73 @@
 import Em from 'ember';
-import Firebase from 'firebase';
-import config from 'lockerbeast/config/environment';
 
 export default Em.Service.extend({
 
+  store: Em.inject.service(),
+  session: Em.inject.service(),
+
+  /**
+   * Logout the current user from Firebase using global session.
+   * @returns {Em.RSVP.Promise}
+   */
+  logout() {
+    this.get('session').fetch('firebase').finally(() => this.get('session').close('firebase'));
+  },
+
+
+  /**
+   * Return Firebase.Promise from createUserWithEmailAndPassword API call.
+   * @param newUser
+   * @returns {Em.RSVP.Promise}
+   */
   signUpUser(newUser){
-    let conn = Firebase(config.firebase);
+    const fbAuth = firebase.auth();
 
-    debugger;
-    conn.createUser( newUser,
-      (error, userData) => {
-        if (error) {
-          // Handle User Creation Error
-          alert(error.message);
-          return void 0;
+    return fbAuth.createUserWithEmailAndPassword( newUser.get('email'), newUser.get('createPassword'));
+  },
+
+
+  /**
+   * Login through Firebase using the session service
+   * @param email
+   * @param password
+   * @returns {Em.RSVP.Promise}
+   */
+  login(email, password) {
+    // Get the current Em Firebase session ( Torii )
+    return this.get('session').open('firebase', {
+      provider: 'password',
+      email: email,
+      password: password
+    });
+  },
+
+
+  /**
+   * Create a new user profile model and save it.
+   * @param newUser
+   * @return {Promise}
+   */
+  createUserProfile(newUser) {
+
+    let userRecord = this.get('store').createRecord('member', {
+      id: this.get('session.uid'),
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      birthday: moment(newUser.birthday, 'YYYY-MM-DD').utc().toISOString(),
+      username: newUser.username,
+      country: newUser.country,
+      gender: newUser.gender,
+      email: newUser.email
+    });
+
+    return userRecord.save()
+      .then(savedUser => {
+        // Send the user to the home page!
+        if (savedUser === null) {
+          throw new Error('User Creation Failed!');
         }
-        // Get the current Em Firebase session ( Torii )
-        return this.get('session').open('firebase', {
-          provider: 'password',
-          username: newUser.username,
-          email: newUser.email,
-          password: newUser.password
-        })
-          .then(( ) => {
-            // Create and Save a userProfile
-
-            let userRecord = this.store.createRecord('member', {
-              id: userData.uid,
-              firstName: newUser.firstName,
-              lastName: newUser.lastName,
-              birthday: moment(newUser.birthday, 'YYYY-MM-DD').utc().toISOString(),
-              username: newUser.username,
-              country: newUser.country,
-              gender: newUser.gender,
-              email: newUser.email
-            });
-
-            userRecord.save().then(savedUser => {
-              // Send the user to the home page!
-              if (savedUser === null) {
-                throw new Error('User Creation Failed!');
-              }
-              alert('good to go!');
-            });
-          })
-          .catch( (error) => {
-            // Catch errors propigated from within promise chain.
-            Em.Logger.error("Error in Promise Chain User/UserProfile Creation", error);
-            // Handle User Creation Error
-            for (const err of error.errors) {
-              alert(err.message);
-            }
-            return void 0;
-          });
-
-
+        alert('good to go!');
       });
-
   }
+
 });

@@ -43,7 +43,7 @@ test('it triggers the onSubmitForm action upon submission', function(assert) {
     firstName: 'Mike',
     lastName: 'Mcool',
     birthday: '1990-12-12',
-    password: 'pass',
+    password: 'pass123',
     gender: 'male'
   };
 
@@ -65,7 +65,7 @@ test('it triggers the onSubmitForm action upon submission', function(assert) {
 
   this.set('formValues', Em.Object.create());
 
-  this.render(hbs`{{welcome/signup-form handleSubmitForm=onSubmitForm formValues=formValues}}`);
+  this.render(hbs`{{welcome/signup-form onSubmitForm=onSubmitForm formValues=formValues}}`);
 
   assert.equal(this.$('button[type=submit]').attr('disabled'), 'disabled', 'Form should not be ready before filled out');
 
@@ -84,6 +84,3 @@ test('it triggers the onSubmitForm action upon submission', function(assert) {
   this.$('button[type=submit]').click();
 
 });
-
-
-

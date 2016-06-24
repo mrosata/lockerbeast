@@ -4,10 +4,11 @@
 /* jshint node: true */
 
 const config = {
-  /*contentSecurityPolicy: { 'connect-src': "'self' https://auth.firebase.com wss://!*.firebaseio.com" },*/
   firebase: {
-    apiKey: '',
-    databaseURL: 'https://amber-torch-23.firebaseio.com/'
+  apiKey: "AIzaSyDCbFPKkkUsPprGyeXRfciTLmqTG9A1msw",
+  authDomain: "amber-torch-23.firebaseapp.com",
+  databaseURL: "https://amber-torch-23.firebaseio.com",
+  storageBucket: "amber-torch-23.appspot.com"
   }
 };
 
