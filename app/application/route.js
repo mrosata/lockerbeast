@@ -3,6 +3,9 @@ import Em from 'ember';
 export default Em.Route.extend({
 
   actions: {
+    /**
+     * Revoke user auth and then return them to welcome screen.
+     */
     logout( ) {
       this.get('session').close().then(() => this.transitionTo('welcome'));
     },
