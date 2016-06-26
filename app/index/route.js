@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  
+
   /**
    * Check if the user is logged in.
    * @return {[type]}  [description]

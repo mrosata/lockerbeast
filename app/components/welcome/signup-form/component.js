@@ -36,10 +36,10 @@ export default Em.Component.extend({
     'formValues.firstName', 'formValues.lastName', 'formValues.birthday', 'formValues.email', 'formValues.gender',
     function() {
 
-      if (!this.get('formValues.username') || this.get('formValues.username.length') < 4) {
+      if (!this.get('formValues.username') || this.get('formValues.username.length') < 6) {
         return true;
       }
-      if (this.get('formValues.confirmPassword') !== this.get('formValues.createPassword') || this.get('formValues.confirmPassword') < 4 ) {
+      if (this.get('formValues.confirmPassword') !== this.get('formValues.createPassword') || this.get('formValues.confirmPassword') < 6 ) {
         return true;
       }
 

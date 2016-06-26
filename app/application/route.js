@@ -7,7 +7,8 @@ export default Em.Route.extend({
      * Revoke user auth and then return them to welcome screen.
      */
     logout( ) {
-      this.get('session').close().then(() => this.transitionTo('welcome'));
+      const provider = this.get('session.provider');
+      this.get('session').close(provider).then(() => this.transitionTo('welcome'));
     },
 
     /**
