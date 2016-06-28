@@ -1,0 +1,104 @@
+{{yield}}
+<!-- HEADLINE -->
+<div class="headline-row">
+    <h1 class="section-title caticon sbx"><i>C</i><span class="sport"></span><span class="title">{{title}}</span></h1>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <form class="create-rating form form-horizontal" name="create-account" {{action 'onSubmitCreate' on='submit'}}>
+          {{!
+            //==========================================================
+            // Users can sign up for an account using this form.
+            // Below is a list of inputs html names and Ember
+            // property accessible through the component.
+            // Acceptance: /tests/acceptance/welcome-test.js
+            //
+            // When all fields are filled in properly the CP
+            // formIsReady should equal true
+            //
+            // form[name="create-account"]         onsubmit='onSubmitForm'
+            //     input[name="id"]             email
+            //     input[name="what"]        firstName]
+            //     input[name="rating"]            rating
+            //
+            //==========================================================
+          }}
+          {{input type="hidden" name="item" value=formValues.item}}
+          <div class="form-group">
+              <div class="row">
+                  <div class="col-sm-12">
+                      <div class="item-desc">
+                          {{if item.name item.name}}
+                          {{if item.desc item.desc}}
+                      </div>
+                  </div>
+              </div>
+          </div>
+            <div class="form-group">
+                <label for="gender">Rating: </label>
+                <div class="row">
+
+                    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1">
+                      {{#radio-button
+                      radioClass="form-control rating-radio radio"
+                      radioId="rating-1"
+                      groupValue=formValues.rating
+                      name="rating"
+                      value="1"
+                      }}
+                          1
+                      {{/radio-button}}
+                      {{#radio-button
+                      radioClass="form-control rating-radio radio"
+                      radioId="rating-2"
+                      groupValue=formValues.rating
+                      name="rating"
+                      value="2"
+                      }}
+                          2
+                      {{/radio-button}}
+                      {{#radio-button
+                      radioClass="form-control rating-radio radio"
+                      radioId="rating-3"
+                      groupValue=formValues.rating
+                      name="rating"
+                      value="3"
+                      }}
+                          3
+                      {{/radio-button}}
+                      {{#radio-button
+                      radioClass="form-control rating-radio radio"
+                      radioId="rating-4"
+                      groupValue=formValues.rating
+                      name="rating"
+                      value="4"
+                      }}
+                          4
+                      {{/radio-button}}
+                      {{#radio-button
+                      radioClass="form-control rating-radio radio"
+                      radioId="rating-5"
+                      groupValue=formValues.rating
+                      name="rating"
+                      value="5"
+                      }}
+                          5
+                      {{/radio-button}}
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <button type="submit" disabled={{if submitIsDisabled true null}} class="btn btn-primary" {{action 'onSubmitCreate' on='click'}}>Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4"></div>
+</div>

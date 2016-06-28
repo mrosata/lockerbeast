@@ -9,6 +9,7 @@ Router.map(function() {
   this.authenticatedRoute('home');
   this.route('welcome', function() {
     this.route('login');
+    this.route('auth', {path: '/auth'});
   });
 });
 

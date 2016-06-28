@@ -9,8 +9,18 @@ module.exports = function(environment) {
     locationType: 'auto',
 
     firebase: config.firebase,
+
     torii: {
-      sessionServiceName: 'session'
+      sessionServiceName: 'session',
+      providers: {
+        'instagram': {
+          appId: config.instagram.clientId,
+          scope: 'public',
+          redirectUri: config.instagram.redirectUri[environment],
+          authUrl: config.instagram.authUrl,
+          apiUrl: config.instagram.apiUrl
+        }
+      }
     },
     EmberENV: {
       FEATURES: {

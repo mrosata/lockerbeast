@@ -19,4 +19,3 @@ testem.log
 .idea/
 # Don't share firebase/api information
 config/config.js
-
