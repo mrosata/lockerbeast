@@ -13,7 +13,8 @@ export default Em.Component.extend({
     this._super(...arguments);
     Em.run.once(() => {
       this.set('formValues', Em.Object.create({
-        item: '',
+        itemType: '',
+        itemId: '',
         rating: ''
       }));
     });
@@ -23,8 +24,8 @@ export default Em.Component.extend({
   /**
    * Computed property which reflects whether the form has been completely filled out.
    */
-  submitIsDisabled: Em.computed('formValues.rating', 'formValues.rating', function() {
-    return !this.get('formValues.rating');
+  submitIsDisabled: Em.computed('formValues.rating', 'formValues.itemId', 'formValues.itemType', function() {
+    return !this.get('formValues.rating') || !this.get('formValues.itemType') || !this.get('formValues.itemId');
   }),
 
 
@@ -38,7 +39,7 @@ export default Em.Component.extend({
      */
     onSubmitCreate() {
       // Make a regular `password` property.
-      this.sendAction('onSubmitCreate', this.get('formValues'));
+      this.sendAction('onSubmitCreate', 'rating', this.get('formValues'));
     }
   }
 });

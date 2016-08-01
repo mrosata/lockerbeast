@@ -4,6 +4,8 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   member: belongsTo('member', {inverse: 'ratings'}),
-  rating: attr('number'),
-  item: belongsTo('item')
+  recommendation: belongsTo('recommendation'),
+  // item and item type will be used for lookups if needed
+  itemId: attr(),
+  itemType: attr()
 });

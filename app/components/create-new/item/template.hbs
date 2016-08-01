@@ -1,1 +1,53 @@
 {{yield}}
+<!-- HEADLINE -->
+<div class="headline-row">
+    <h1 class="section-title caticon sbx"><i>C</i><span class="sport"></span><span class="title">{{title}}</span></h1>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-md-8">
+        <form class="create-rating form form-horizontal" name="create-account" {{action 'onSubmitCreate' on='submit'}}>
+          {{!
+            //==========================================================
+            // When all fields are filled in properly the CP
+            // submitIsDisabled should equal false
+            //
+            // form[name="create-account"]          onsubmit='onSubmitForm'
+            //     input[name="item"]               item
+            //     input[name="category"]           category
+            //     input[name="body"]               body
+            //     input[name="title"]              title
+            //
+            //==========================================================
+          }}
+          {{input type="hidden" name="itemType" value=itemType}}
+
+            <div class="form-group">
+                <label for="title">Title:
+                  {{input type="text" name="title" class="form-control" value=formValues.title}}
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category:
+                  {{input type="text" name="category" class="form-control" value=formValues.category}}
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="body">Body:
+                  {{textarea name="body" class="form-control" value=formValues.body}}
+                </label>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <button type="submit" disabled={{if submitIsDisabled true null}} class="btn btn-primary" {{action 'onSubmitCreate' on='click'}}>Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4"></div>
+</div>

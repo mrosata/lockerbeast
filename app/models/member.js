@@ -28,6 +28,7 @@ export default Model.extend({
   }),
 
   ratings: hasMany('ratings'),
+  itemsAdded: hasMany('items'),
   /**
    * fullName -- computed value
    * "firstName lastName"

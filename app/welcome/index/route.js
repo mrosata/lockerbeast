@@ -1,7 +1,6 @@
 import Em from 'ember';
 
 export default Em.Route.extend({
-  auth: Em.inject.service(),
 
   actions: {
 
@@ -15,10 +14,11 @@ export default Em.Route.extend({
         .signUpUser(newUser)
         .then(() => authService.login(newUser.get('email'), newUser.get('password')))
         .then(() => authService.createUserProfile(newUser))
+        .then(() => this.transitionTo('home'))
         .catch(error => {
           // Catch errors propigated from within promise chain.
           Em.Logger.error("Error in Promise Chain User/UserProfile Creation", error);
-          
+
           // Handle User Creation Error
           for (const err of error.errors) {
             alert(err.message);

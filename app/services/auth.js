@@ -5,6 +5,10 @@ export default Em.Service.extend({
   store: Em.inject.service(),
   session: Em.inject.service(),
 
+
+  user: Em.computed('session.uid', function() {
+    return this.get('store').find('member', this.get('session.uid'));
+  }),
   /**
    * Logout the current user from Firebase using global session.
    * @returns {Em.RSVP.Promise}
@@ -60,14 +64,7 @@ export default Em.Service.extend({
       email: newUser.email
     });
 
-    return userRecord.save()
-      .then(savedUser => {
-        // Send the user to the home page!
-        if (savedUser === null) {
-          throw new Error('User Creation Failed!');
-        }
-        alert('good to go!');
-      });
+    return userRecord.save();
   }
 
 });
