@@ -19,11 +19,12 @@ export default JUI.extend({
   type: 'text',
   date: '',
   readonly: true,
+  dateFormat: 'ISO_8601',
 
   onSelect(textDate) {
     this._setDate( textDate );
   },
- 
+
   change() {
     this._setDate( this.$.val() );
   },

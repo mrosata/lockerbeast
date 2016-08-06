@@ -4,7 +4,9 @@
     "window",
     "moment",
     "-Promise",
-    "firebase"
+    "firebase",
+    "get",
+    "set"
   ],
   "browser": true,
   "boss": true,

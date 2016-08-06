@@ -14,5 +14,6 @@ App = Ember.Application.extend({
 });
 
 loadInitializers(App, config.modulePrefix);
-
+window.get = (context, prop) => typeof context.get === "function" ? context.get(prop) : context[prop];
+window.set = (context, prop, val) => typeof context.set === "function" ? context.set(prop, val) : (context[prop] = val);
 export default App;

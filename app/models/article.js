@@ -6,7 +6,11 @@ export default Model.extend({
   title: attr('string'),
   body: attr('string'),
   category: attr('string'),
-  added: attr(),
+  date: attr('number', {
+    defaultValue: function() {
+      return moment.utc().unix();
+    }
+  }),
   member: belongsTo('member', {inverse: 'itemsAdded'}),
   ratings: hasMany('rating', {inverse: null})
 });

@@ -1,0 +1,56 @@
+
+<form {{action 'onSubmitForm' on='submit'}}>
+  {{#each _formFields as |formPart|}}
+
+  {{! --- FIELD --- TEXT --- INPUT --- }}
+    {{#if ('is-equal' 'text' formPart.type)}}
+        <div class={{'either-or' formPart.containerClass htmlFieldContainerClass}}>
+            <div class={{'either-or' formPart.wrapperClass htmlFieldWrapperClass}}>
+
+              {{#if formPart.inlineLabel}}
+
+              {{! -- Show inline label if specified  -- }}
+                  <label>{{formPart.inlineLabel}}
+                    {{input type='text'
+                    value=formPart.value
+                    class=formPart.class
+                    required=formPart.required
+                    placeholder=formPart.placeholder}}
+                  </label>
+              {{else}}
+              {{! -- Show regular label if specified  -- }}
+                {{#if formPart.label}}
+                    <label>{{formPart.label}}</label>
+                {{/if}}
+
+                {{! -- Show input regardless-- }}
+                {{input type='text' value=formPart.value class=formPart.class required=formPart.required}}
+              {{/if}}
+
+            </div>
+        </div>
+    {{/if}}
+
+
+    {{! --- FIELD --- SELECT --- INPUT --- }}
+    {{#if ('is-equal' 'select' formPart.type)}}
+        <div class={{'either-or' formPart.containerClass htmlFieldContainerClass}}>
+            <div class={{'either-or' formPart.wrapperClass htmlFieldWrapperClass}}>
+              {{select-menu
+              prompt=formPart.prompt
+              value=formPart.value
+              class=formPart.class
+              required=formPart.required
+              content=formPart.options
+              selection=formPart.value}}
+            </div>
+        </div>
+    {{/if}}
+
+  {{/each}}
+
+    <button type="submit"
+            class={{submitBtnClass}}
+            disabled={{submitIsDisabled}}
+      {{action 'onSubmitForm' on='click'}}>{{submitBtnText}}</button>
+</form>

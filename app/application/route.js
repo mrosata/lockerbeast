@@ -8,7 +8,8 @@ export default Em.Route.extend({
      */
     logout( ) {
       const provider = this.get('session.provider');
-      this.get('session').close(provider).then(() => this.transitionTo('welcome'));
+      this.get('session').close(provider)
+        .then(() => this.transitionTo('welcome'));
     },
 
     /**
@@ -40,7 +41,6 @@ export default Em.Route.extend({
           member: user
         };
         this.get('store').createRecord(modelType, model).save().then(record => {
-
           record.set('user', user);
           user.get('itemsAdded').pushObject(record);
           record.save();
@@ -50,6 +50,5 @@ export default Em.Route.extend({
 
     }
   }
-
 
 });

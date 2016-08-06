@@ -5,7 +5,11 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 export default Model.extend({
   title: attr(),
   member: belongsTo('member'),
-  date: attr(),
+  date: attr('number', {
+    defaultValue: function() {
+      return moment.utc().unix();
+    }
+  }),
   body: attr(),
   url: attr('string'),
   ratings: hasMany('rating')

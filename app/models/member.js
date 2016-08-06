@@ -7,7 +7,7 @@ export default Model.extend({
   firstName: attr('string'),
   lastName: attr('string'),
   username: attr('string'),
-  birthday: attr(),
+  birthday: attr('number'),
   gender: attr('string', 'unspecified'),
   rank: attr('number'),
   email: attr('string'),
