@@ -1,0 +1,8 @@
+{{!-- Headline --}}
+{{headline-row letter="T" icon="sport" text="Recommendation Listings"}}
+
+{{yield}}
+
+{{#each recommendations as |recommendation|}}
+  {{recommendation-listings/listing item=recommendation}}
+{{/each}}

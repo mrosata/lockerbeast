@@ -82,6 +82,7 @@ export default Em.Component.extend({
   actions: {
     onSubmitForm() {
       this._super(...arguments);
+      this.$('form').trigger('reset');
       get(this, 'callbackSubmit')(this.get('allFinalValues'));
     }
   }

@@ -1,0 +1,26 @@
+
+<div class="row thumb-medium-with-content">
+  <!-- Post -->
+  <article class="col-md-12 col-sm-12 col-xs-12 post post-spacer">
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <div class="entry-header">
+          {{#if item.image}}
+            <img class="img-responsive" alt="Image for recommendation listing" src={{item.image}}>
+          {{/if}}
+        </div>
+      </div>
+
+
+      <div class="col-md-8 col-sm-8">
+        <div class="post-txt">
+          <h3><a href="#link" class="title">{{item.title}}</a> by: {{item.member.username}}</h3>
+          <a href="#category" class="caticon icon-space-medium"><i class="icon-clock"></i><span class="sport"></span>{{pretty-date item.date}}</a>
+          <p class="hidden-xs">{{itemSummary}}...<br> {{item.url}}</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- END -->
+</div>
