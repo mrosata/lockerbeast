@@ -3,9 +3,11 @@ import _ from 'lodash';
 
 const curry = _.curry;
 // get :: Object -> Mixed
-export const get = curry((obj, attr) => is.callable(obj.get) ? obj.get(attr) : obj[attr]);
+let get;
+get = curry((obj, attr) => is.callable(obj.get) ? obj.get(attr) : obj[attr]);
 // set :: Object ->
-export const set = curry((obj, attr, val) => is.callable(obj.set) ? obj.set(attr, val) : obj[attr] = val);
+let set;
+set = curry((obj, attr, val) => is.callable(obj.set) ? obj.set(attr, val) : obj[attr] = val);
 // then :: Function -> Promise -> Promise
 export const then = curry((fn, thenable) => thenable.then(fn));
 // findFromStore :: Store -> String, String -> Promise

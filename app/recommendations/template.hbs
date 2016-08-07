@@ -9,7 +9,8 @@ onSubmit=(action 'onSubmitForm')}}
 {{!-- Headline --}}
   {{headline-row letter="C" icon="sport" text="Create Recommendation"}}
 
-
 {{/super-form}}
 
-{{recommendation-listings recommendations=recommendations}}
+
+{{!-- Show the recommendation listings (Most Recent) --}}
+{{list-items items=recommendations headline=headlineInfo listStyle='recommendation'}}

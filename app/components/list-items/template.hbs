@@ -1,0 +1,32 @@
+{{!-- Headline --}}
+{{headline-row letter=headline.icon icon=headline.icon text=headline.text}}
+
+{{yield}}
+
+
+{{#if ('is-equal' listStyle 'basic')}}
+{{! BASIC LIST }}
+{{/if}}
+
+
+{{#if ('is-equal' listStyle 'short-text')}}
+{{! ASIDE (text) should use tagName='aside' class="col-md-3 sidebar-trending"}}
+  <ul class="media-list">
+
+    {{#each items as |item|}}
+      {{list-items/short-text item=item maxLength=maxLength}}
+    {{/each}}
+
+  </ul>
+{{/if}}
+
+
+{{#if ('is-equal' listStyle 'recommendation')}}
+{{! Recommendation (image & text) should use tagName='section' class='col-md-12 section-post-related'}}
+
+  {{#each items as |item|}}
+    {{log item}}
+    {{list-items/recommendation item=item maxLength=maxLength}}
+  {{/each}}
+
+{{/if}}

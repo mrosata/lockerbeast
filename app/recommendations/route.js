@@ -1,5 +1,11 @@
 import Em from 'ember';
 
+const headlineInfo = {
+  text: 'Recommendation Listings',
+  icon: 'news',
+  letter: 'R'
+};
+
 export default Em.Route.extend({
 
   model() {
@@ -60,12 +66,12 @@ export default Em.Route.extend({
     this.set('controller.model', get(this, 'context'));
     this.set('controller.recommendations', get(this, 'context.recommendations'));
     this.set('controller.actions', get(this, 'actions'));
+    this.set('controller.headlineInfo', headlineInfo);
   },
 
   actions: {
     onSubmitForm(formValues) {
-      this.recordFactory.createNew('recommendation', formValues)
-        .then(r => Em.Logger.info('created new model!', r));
+      this.recordFactory.createNew('recommendation', formValues).then();
     }
   }
 });
