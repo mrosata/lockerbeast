@@ -1,16 +1,18 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
+import {getDefaultDate} from 'lockerbeast/utils/date-tools';
 
 export default Model.extend({
   title: attr(),
   member: belongsTo('member'),
-  date: attr('number', {
-    defaultValue: function() {
-      return moment.utc().unix();
-    }
-  }),
+  category: attr('string'),
+  comments: hasMany('comment'),
   body: attr(),
   url: attr('string'),
-  ratings: hasMany('rating')
+  image: attr(),
+  ratings: hasMany('rating'),
+  date: attr('number', {
+    defaultValue: getDefaultDate
+  })
 });

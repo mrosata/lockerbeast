@@ -4,5 +4,6 @@ import attr from 'ember-data/attr';
 
 export default Model.extend({
   name: attr(),
-  keywords: attr()
+  index: attr('number'),
+  description: attr()
 });

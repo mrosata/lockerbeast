@@ -21,8 +21,10 @@ const checkIfFieldFailsValidation = (field) => !field.validation(field.value);
  *
  * @type {
  *   {
- *     htmlFieldContainerClass: string,
- *     htmlFieldWrapperClass: string,
+ *     formClass: string,
+ *     containerClass: string,
+ *     fieldWrapperClass: string,
+ *     labelWrapperClass: string,
  *     submitBtnClass: string,
  *     submitBtnText: string,
  *     passThrough: null|object,
@@ -39,8 +41,10 @@ const checkIfFieldFailsValidation = (field) => !field.validation(field.value);
  */
 export default Em.Component.extend({
 
-  htmlFieldContainerClass: 'form-group',
-  htmlFieldWrapperClass: 'col-sm-12 col-md-6',
+  formClass: 'form form-horizontal',
+  containerClass: 'form-group',
+  fieldWrapperClass: 'col-sm-10',
+  labelClass: 'col-sm-2 control-label',
   submitBtnClass: '',
   submitBtnText: 'Submit',
 

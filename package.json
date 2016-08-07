@@ -41,7 +41,9 @@
     "ember-lodash": "0.0.10",
     "ember-radio-button": "1.0.7",
     "ember-resolver": "^2.0.3",
+    "ember-uploader": "1.1.0",
     "emberfire": "2.0.0",
+    "file-uploader": "1.0.0",
     "loader.js": "^4.0.1",
     "torii": "0.8.0"
   }

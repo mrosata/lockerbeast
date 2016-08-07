@@ -1,0 +1,41 @@
+{{outlet}}
+
+{{#super-form
+formFields=model.formFields
+passThrough=model.passThroughFields
+submitBtnClass='btn btn-primary'
+onSubmit=(action 'onSubmitForm')}}
+
+  <div class="headline-row">
+    <h1 class="section-title caticon sbx"><i>C</i><span class="sport"></span>Create Recommendation</h1>
+  </div>
+
+{{/super-form}}
+
+{{#each recommendations as |recommendation|}}
+
+  <div class="recommendation">
+
+      <div class="head">
+          <h1>{{recommendation.title}}</h1>
+          <h3>{{recommendation.date}}</h3>
+      </div>
+
+
+      <div class="user-info">
+        {{recommendation.member.username}}<br>
+        {{recommendation.member.fullName}}
+      </div>
+
+
+      <div class="body">
+        {{recommendation.body}}
+
+        {{#if recommendation.image}}
+            <img src={{recommendation.image}}>
+        {{/if}}
+
+        {{recommendation.url}}
+      </div>
+  </div>
+{{/each}}

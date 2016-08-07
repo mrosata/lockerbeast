@@ -9,7 +9,6 @@ export default Model.extend({
   username: attr('string'),
   birthday: attr('number'),
   gender: attr('string', 'unspecified'),
-  rank: attr('number'),
   email: attr('string'),
 
   bio: attr('string', {
@@ -27,8 +26,11 @@ export default Model.extend({
     defaultValue: true
   }),
 
-  ratings: hasMany('ratings'),
-  itemsAdded: hasMany('items'),
+  ratings: hasMany('rating'),
+  items: hasMany('item'),
+  reviews: hasMany('review'),
+  recommendations: hasMany('recommendation'),
+
   /**
    * fullName -- computed value
    * "firstName lastName"

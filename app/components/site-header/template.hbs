@@ -27,49 +27,30 @@
                       <div id="navbar" class="navbar-collapse collapse">
                           <ul class="nav navbar-nav">
                               <li class="active dropdown">
-                                  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home <span class="caret"></span></a>
+                                  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Voice of the People <span class="caret"></span></a>
                                   <ul class="dropdown-menu">
-                                      <li><a href="index.html">Homepage</a></li>
-                                      <li><a href="home2.html">Home V2</a></li>
-                                      <li><a href="home3.html">Home V3</a></li>
-                                      <li><a href="home4.html">Home V4</a></li>
-                                      <li><a href="home5.html">Home V5</a></li>
-                                      <li><a href="home-sidebar.html">Home V6 (Sidebar)</a></li>
+                                      <li>
+                                        {{#link-to "home"}}Main{{/link-to}}
+                                      </li>
+                                      <li>
+                                        {{#link-to "reviews"}}Reviews{{/link-to}}
+                                      </li>
+                                      <li>
+                                        {{#link-to "recommendations"}}Recommendations{{/link-to}}
+                                      </li>
                                   </ul>
                               </li>
 
                               <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Classifieds <span class="caret"></span></a>
                                   <ul class="dropdown-menu">
-                                      <li><a href="category1.html">Category list V1</a></li>
-                                      <li><a href="category2.html">Category list V2</a></li>
-                                      <li><a href="category3.html">Category list V3</a></li>
-                                      <li><a href="category4.html">Category list V4</a></li>
+                                      <li>{{#link-to "market"}}Marketplace{{/link-to}}</li>
                                   </ul>
                               </li>
 
-                              <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages <span class="caret"></span></a>
-                                  <ul class="dropdown-menu">
-                                      <li><a href="single-page.html">Single Page</a></li>
-                                      <li><a href="single-page-image.html">Single Page with Image</a></li>
-                                      <li><a href="single-page-video.html">Single Page with Video</a></li>
-                                      <li><a href="single-post.html">Single Post</a></li>
-                                      <li><a href="single-post-full.html">Single Post Full-Width</a></li>
-                                      <li><a href="single-post-video.html">Single Post with Video</a></li>
-                                  </ul>
+                              <li>
+                                {{#link-to "contact"}}Contact{{/link-to}}
                               </li>
-
-                              <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Extra <span class="caret"></span></a>
-                                  <ul class="dropdown-menu">
-                                      <li><a href="author.html">Author Page</a></li>
-                                      <li><a href="search-result.html">Search Results</a></li>
-                                      <li><a href="404.html">404 Page</a></li>
-                                  </ul>
-                              </li>
-
-                              <li><a href="contact.html">Contact</a></li>
                               <li>
                                   <a href="#" class="logout" {{action 'logout' on='click'}}>Logout</a>
                               </li>

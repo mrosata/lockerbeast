@@ -11,6 +11,10 @@ Router.map(function() {
     this.route('login');
     this.route('auth', {path: '/auth'});
   });
+  this.route('reviews');
+  this.route('recommendations');
+  this.route('market');
+  this.route('contact');
 });
 
 export default Router;

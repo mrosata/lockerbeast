@@ -4,8 +4,7 @@ export default Em.Service.extend({
 
   store: Em.inject.service(),
   session: Em.inject.service(),
-
-
+  
   user: Em.computed('session.uid', function() {
     return this.get('store').find('member', this.get('session.uid'));
   }),
