@@ -12,9 +12,15 @@ Router.map(function() {
     this.route('auth', {path: '/auth'});
   });
   this.route('reviews');
-  this.route('recommendations');
+  this.route('recommendations', function() {
+    this.route('single', {path: '/single/:id'});
+    this.route('create');
+  });
   this.route('market');
   this.route('contact');
+  this.route('search', function() {
+    this.route('tags', {path: '/:tagId'});
+  });
 });
 
 export default Router;

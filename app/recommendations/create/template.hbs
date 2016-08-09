@@ -1,0 +1,12 @@
+{{#super-form
+formFields=model.formFields
+passThrough=model.passThroughFields
+submitBtnClass='btn btn-primary'
+onSubmit=(action 'onSubmitForm')}}
+
+{{!-- Headline --}}
+  {{headline-row letter="C" icon="sport" text="Create Recommendation"}}
+
+{{/super-form}}
+
+{{outlet}}

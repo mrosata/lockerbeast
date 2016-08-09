@@ -1,16 +1,12 @@
-{{outlet}}
 
-{{#super-form
-formFields=model.formFields
-passThrough=model.passThroughFields
-submitBtnClass='btn btn-primary'
-onSubmit=(action 'onSubmitForm')}}
-
-{{!-- Headline --}}
-  {{headline-row letter="C" icon="sport" text="Create Recommendation"}}
-
-{{/super-form}}
+<section class="col-md-9 col-sm-12 section-main-content">
+  {{liquid-outlet}}
 
 
-{{!-- Show the recommendation listings (Most Recent) --}}
-{{list-items items=recommendations headline=headlineInfo listStyle='recommendation'}}
+</section>
+<section class="col-md-9 col-sm-12 section-main-content">
+
+  {{!-- Show the recommendation listings (Most Recent) --}}
+  {{list-items items=model headline=headlineInfo listStyle='recommendation'}}
+
+</section>

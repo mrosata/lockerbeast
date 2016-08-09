@@ -2,19 +2,21 @@
 
 <section class="col-md-12 section-tags">
 
+  {{#if tags}}
+    <ul class="post-tags">
+    {{#each tags as |tag|}}
+
+      <li>
+        {{#link-to "search.tags" tag}}{{tag.name}}{{/link-to}}
+      </li>
+
+    {{/each}}
+    </ul>
+  {{/if}}
   <!-- HEADLINE -->
   {{headline-row letter="T" icon="sport" text="Tags"}}
 
 
-  <ul class="post-tags">
-    <li><a href="#">Videos</a></li>
-    <li><a href="#">Sport</a></li>
-    <li><a href="#">Gastro</a></li>
-    <li><a href="#">Tech</a></li>
-    <li><a href="#">Urbanism</a></li>
-    <li><a href="#">Lifestyle</a></li>
-    <li><a href="#">Trending</a></li>
-  </ul>
 
 
 </section>

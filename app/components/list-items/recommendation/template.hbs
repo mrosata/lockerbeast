@@ -7,6 +7,8 @@
         <div class="entry-header">
           {{#if item.image}}
             <img class="img-responsive" alt="Image for recommendation listing" src={{item.image}}>
+          {{else}}
+            <img src="" alt="Need Default Image Here For When Users Don't Include Images In Their Recommendations!">
           {{/if}}
         </div>
       </div>
@@ -14,7 +16,9 @@
 
       <div class="col-md-8 col-sm-8">
         <div class="post-txt">
-          <h3><a href="#link" class="title">{{item.title}}</a> by: {{item.member.username}}</h3>
+          <h3> {{#link-to 'recommendations.single' item class="title"}} {{item.title}} {{/link-to}}
+            by: {{item.member.username}}
+          </h3>
           <a href="#category" class="caticon icon-space-medium"><i class="icon-clock"></i><span class="sport"></span>{{pretty-date item.date}}</a>
           <p class="hidden-xs">{{itemSummary}}...<br> {{item.url}}</p>
         </div>

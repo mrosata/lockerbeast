@@ -12,6 +12,7 @@ export default Model.extend({
   url: attr('string'),
   image: attr(),
   ratings: hasMany('rating'),
+  tags: hasMany('tag', {inverse: 'recommendations'}),
   date: attr('number', {
     defaultValue: getDefaultDate
   })

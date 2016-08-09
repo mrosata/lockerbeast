@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import is from 'lockerbeast/utils/is';
 
 export default Ember.Component.extend({
   content: [],
@@ -8,13 +9,20 @@ export default Ember.Component.extend({
 
   tagName: 'select',
 
+  didReceiveAttrs() {
+    this._super(...arguments);
+    if (!get(this, 'content') && is.thenable(get(this, 'contentPromise'))) {
+      get(this, 'contentPromise').then(val => set(this, 'content', val));
+    }
+  },
+
   change() {
 
     let selectedIndex = this.$(this.element)[0].selectedIndex;
-    let content = this.get('content');
+    let content = get(this, 'content');
 
     // decrement index by 1 if we have a prompt
-    let hasPrompt = !!this.get('prompt');
+    let hasPrompt = !!get(this, 'prompt');
     let contentIndex = hasPrompt ? selectedIndex - 1 : selectedIndex;
     let _selection = content[contentIndex];
 

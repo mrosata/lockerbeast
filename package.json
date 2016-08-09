@@ -44,6 +44,7 @@
     "ember-uploader": "1.1.0",
     "emberfire": "2.0.0",
     "file-uploader": "1.0.0",
+    "liquid-fire": "0.24.1",
     "loader.js": "^4.0.1",
     "torii": "0.8.0"
   }

@@ -19,7 +19,7 @@ export default JUI.extend({
   type: 'text',
   date: '',
   readonly: true,
-  dateFormat: 'ISO_8601',
+  dateFormat: 'yy-mm-dd',
 
   onSelect(textDate) {
     this._setDate( textDate );

@@ -1,6 +1,7 @@
 import Em from 'ember';
-
-import {applyToFirstCallableFn, capitalize} from 'lockerbeast/utils/ember-fp';
+import is from 'lockerbeast/utils/is';
+import _ from 'lodash';
+import {applyToFirstCallableFn, capitalize, findOrCreate, queryRecordBy, pushHasManyToModel, setItemToModel} from 'lockerbeast/utils/ember-fp';
 
 // This bit of code figures out relationship key on member to a record and attaches relationship
 const inflector = new Em.Inflector(Em.Inflector.defaultRules);
@@ -23,12 +24,15 @@ export default Em.Service.extend({
 
   createNew(modelType, hash) {
     let _get = (v) => get(this, v);
-    return applyToFirstCallableFn( this, [hash, modelType], _get(`create${capitalize(modelType)}`), _get('createGeneric') );
+    return applyToFirstCallableFn(this,
+      [hash, modelType],
+      _get(`create${capitalize(modelType)}`),
+      _get('createGeneric'));
   },
 
 
   createGeneric(modelValues, modelType) {
-    let record = this.get('store').createRecord(modelType, modelValues);
+    let record = get(this, 'store').createRecord(modelType, modelValues);
     return record.save();
   },
 
@@ -39,7 +43,7 @@ export default Em.Service.extend({
       return Em.RSVP.reject(new Error("Reviews must have a member property!"));
     }
 
-    let review = this.get('store')
+    let review = get(this, 'store')
       .createRecord('review', modelValues);
 
     return review.save().then(attachMemberToModel(member));
@@ -47,16 +51,51 @@ export default Em.Service.extend({
 
 
   createRecommendation(modelValues) {
+    const store = get(this, 'store');
+    let categoryId = modelValues.category || null;
     let member = modelValues.member;
+    let tags = modelValues.tags || [];
+    delete modelValues.category;
+    delete modelValues.tags;
 
     if (!member) {
       return Em.RSVP.reject(new Error("Recommendations must have a member property!"));
     }
 
-    let recommendation = this.get('store')
+    let recommendation = store
       .createRecord('recommendation', modelValues);
 
-    return recommendation.save()
-      .then(attachMemberToModel(member));
+    const recSave = recommendation.save();
+
+    return recSave.then((record) => {
+      attachMemberToModel(member);
+      const attachToModel = pushHasManyToModel(record, 'tags');
+      const attachModelToSelf = _.partial(pushHasManyToModel, _, 'recommendations', record);
+      this.rsvpFindOrCreateArrayOfTags(tags)
+        .then(tagModels => {
+          tagModels.map(attachToModel);
+          tagModels.map(attachModelToSelf);
+        });
+      this.findCategoryById(categoryId)
+        .then(setItemToModel(record, 'category'));
+      return record.save();
+    });
+  },
+
+
+  rsvpFindOrCreateArrayOfTags (tags) {
+    const store = get(this, 'store');
+    return Em.RSVP.Promise.all(
+      tags
+        .map((tagName) => Object({id: Em.String.dasherize(tagName), name: tagName}))
+        .map((tagObject) => findOrCreate(store, 'tag', tagObject.id, tagObject))
+    );
+  },
+
+
+  findCategoryById(categoryId) {
+    return get(this, 'store')
+      .find('category', categoryId).catch(() => null);
   }
+
 });

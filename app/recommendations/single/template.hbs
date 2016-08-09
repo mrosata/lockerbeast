@@ -1,0 +1,27 @@
+
+  {{!TODO: Need to create functionality in breadcrumbs}}
+  {{bread-crumbs crumbs=routePath}}
+
+  <div class="row">
+    <section class="col-lg-12 col-md-12 section-single">
+      <!-- HEADLINE -->
+      {{#if model.category}}
+        <a href="#category" class="caticon single-post"><i>T</i><span class="tech"></span> {{ model.category.name }} </a>
+      {{/if}}
+      <h1 class="section-title sbx"> {{ model.title }} </h1>
+
+      {{#if model.image}}
+        <img class="img-responsive gap-bottom" alt="#" src={{model.image}}>
+      {{/if}}
+
+      <span class="date-icon icon-clock"> {{ pretty-date model.date 'DD MMM, YYYY' }} </span>
+      <span class="date-icon icon-rss"> {{ model.member.username }} </span>
+
+      {{#each paragraphs as |pText|}}
+        <p>{{ pText }}</p>
+      {{/each}}
+      <!-- END -->
+    </section>
+  </div>
+
+{{outlet}}

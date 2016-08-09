@@ -1,7 +1,7 @@
 import is from 'lockerbeast/utils/is';
 import _ from 'lodash';
 
-const curry = _.curry;
+export const curry = _.curry;
 // get :: Object -> Mixed
 let get;
 get = curry((obj, attr) => is.callable(obj.get) ? obj.get(attr) : obj[attr]);
@@ -54,11 +54,37 @@ export const setHTML = curry((elem, text) => typeof elem.html === "function" ? e
 export const ifttt = curry((condition, fn) => {if (!!condition) {return fn(condition);}});
 // applyToFirstCallableFn :: Array Fn Fn -> Mixed
 export const applyToFirstCallableFn = curry((context, args, fn1, fn2) => is.callable(fn1) ? fn1.apply(context, args) : fn2.apply(context, args));
+// splitParagraphs :: String -> Array
+export const splitParagraphs = (text) => text.split(/[\r\n]+/).filter((n) => !!n);
+// toArray :: Mixed -> Array
+export const toArray = (item) => is.array(item) ? item : [item];
 
 export function process(fn, chunks, ind) {
   let chunk = chunks[ind];
   return _.isUndefined(chunk) ? void(0) : _.defer(_.partial(process, fn, chunks, ++ind)) && fn(chunk);
 }
+export const queryRecordBy = curry((store, recordType, property, value) =>
+  store.query(recordType, {orderBy: property, equalTo: value}));
+
+// findOrCreate
+export const findOrCreate = curry(function _findOrCreate(store, recordTypeStr, recordId, defaultObj = {}) {
+  return store.find(recordTypeStr, recordId)
+    .catch(()=> {
+      let rec = store.createRecord(recordTypeStr, defaultObj);
+      return rec.save();
+    });
+});
+
+export const pushHasManyToModel = curry(function (modelToSave, hasManyKey, valueToPush) {
+  if (!get(modelToSave, hasManyKey)) {
+    set(modelToSave, hasManyKey, [valueToPush]);
+  } else {
+    get(modelToSave, hasManyKey).pushObject(valueToPush);
+  }
+  return modelToSave.save();
+});
+
+export const setItemToModel = curry((modelToSave, keyToSet, valueToSet) => set(modelToSave, keyToSet, valueToSet));
 
 export default {
   // Lambda functions
@@ -85,9 +111,15 @@ export default {
   htmlElem,
   setHTML,
   ifttt,
-  // Slightly larger functions
+  splitParagraphs,
+  toArray,
+
+  // Slightly larger functions (or ember specific fns)
   process,
   applyToFirstCallableFn,
+  pushHasManyToModel,
+  findOrCreate,
+  setItemToModel,
 
   // Lodash implementations
   partial: _.partial,

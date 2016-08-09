@@ -30,18 +30,38 @@
             value=formPart.value
             class=formPart.class
             required=formPart.required
-            content=formPart.options
+            content=(if formPart.options formPart.options)
+            contentPromise=(if formPart.optionsPromise formPart.optionsPromise)
             selection=formPart.value}}
+
 
           {{else}}
 
-          {{! --- FIELD --- FIREBASE-FILE --- INPUT --- }}
-            {{#if ('is-equal' 'firebase-file' formPart.type)}}
-              {{super-form/firebase-uploader
-              value=formPart.value
+          {{! --- FIELD --- DATEPICKER --- INPUT --- TODO: Change this to bootstrap datepicker }}
+            {{#if ('is-equal' 'datepicker' formPart.type)}}
+              {{jquery-ui.datepicker
+              defaultDate=(if formPart.defaultDate formPart.defaultDate)
+              dateFormat=(if formPart.formatDate formPart.formatDate 'yy-mm-dd')
+              changeYear=(if formPart.changeYear formPart.changeYear true)
+              minDate=(if formPart.minDate formPart.minDate)
+              maxDate=(if formPart.maxDate formPart.maxDate)
+              isRTL=(if formPart.changeYear formPart.changeYear false)
+              placeholder=(if formPart.placeholder formPart.placeholder 'Choose Date')
               class=formPart.class
               required=formPart.required
-              multiple=false}}
+              value=formPart.value}}
+
+
+            {{else}}
+
+            {{! --- FIELD --- FIREBASE-FILE --- INPUT --- }}
+              {{#if ('is-equal' 'firebase-file' formPart.type)}}
+                {{super-form/firebase-uploader
+                value=formPart.value
+                class=formPart.class
+                required=formPart.required
+                multiple=false}}
+              {{/if}}
             {{/if}}
           {{/if}}
         {{/if}}
