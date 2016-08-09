@@ -58,6 +58,11 @@ export const applyToFirstCallableFn = curry((context, args, fn1, fn2) => is.call
 export const splitParagraphs = (text) => text.split(/[\r\n]+/).filter((n) => !!n);
 // toArray :: Mixed -> Array
 export const toArray = (item) => is.array(item) ? item : [item];
+// tapConsole :: Mixed -> (Identity)
+export const tapConsole = curry((logger, toTap) => {
+  logger(toTap.toString(), toTap);
+  return toTap;
+});
 
 export function process(fn, chunks, ind) {
   let chunk = chunks[ind];
@@ -113,6 +118,7 @@ export default {
   ifttt,
   splitParagraphs,
   toArray,
+  tapConsole,
 
   // Slightly larger functions (or ember specific fns)
   process,

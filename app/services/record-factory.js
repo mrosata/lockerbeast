@@ -1,7 +1,9 @@
 import Em from 'ember';
 import is from 'lockerbeast/utils/is';
 import _ from 'lodash';
-import {applyToFirstCallableFn, capitalize, findOrCreate, queryRecordBy, pushHasManyToModel, setItemToModel} from 'lockerbeast/utils/ember-fp';
+import {
+  applyToFirstCallableFn, capitalize, findOrCreate, queryRecordBy, pushHasManyToModel, setItemToModel, tapConsole
+} from 'lockerbeast/utils/ember-fp';
 
 // This bit of code figures out relationship key on member to a record and attaches relationship
 const inflector = new Em.Inflector(Em.Inflector.defaultRules);
@@ -71,14 +73,20 @@ export default Em.Service.extend({
       attachMemberToModel(member);
       const attachToModel = pushHasManyToModel(record, 'tags');
       const attachModelToSelf = _.partial(pushHasManyToModel, _, 'recommendations', record);
-      this.rsvpFindOrCreateArrayOfTags(tags)
-        .then(tagModels => {
-          tagModels.map(attachToModel);
-          tagModels.map(attachModelToSelf);
-        });
-      this.findCategoryById(categoryId)
-        .then(setItemToModel(record, 'category'));
-      return record.save();
+      return Em.RSVP
+        .Promise.all(
+          [
+            this.rsvpFindOrCreateArrayOfTags(tags)
+              .then(tagModels => {
+                tagModels.map(attachToModel);
+                tagModels.map(attachModelToSelf);
+              }),
+            this.findCategoryById(categoryId)
+              .then(setItemToModel(record, 'category'))
+          ],
+          function() {
+            return record.save();
+          });
     });
   },
 
@@ -94,8 +102,10 @@ export default Em.Service.extend({
 
 
   findCategoryById(categoryId) {
+    alert(categoryId);
     return get(this, 'store')
-      .find('category', categoryId).catch(() => null);
+      .find('category', categoryId)
+      .catch(() => null);
   }
 
 });

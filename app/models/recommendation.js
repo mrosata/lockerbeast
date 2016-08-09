@@ -6,7 +6,7 @@ import {getDefaultDate} from 'lockerbeast/utils/date-tools';
 export default Model.extend({
   title: attr(),
   member: belongsTo('member'),
-  category: attr('string'),
+  category: belongsTo('category', {inverse: null}),
   comments: hasMany('comment'),
   body: attr(),
   url: attr('string'),
