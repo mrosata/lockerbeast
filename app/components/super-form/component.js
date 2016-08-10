@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 
 const setDefaults = (item) => {
-  item.value = item.default || '';
+  set(item, 'value', (get(item, 'default') || ''));
   return item;
 };
 const applyTransforms = (item) => {
@@ -12,21 +12,12 @@ const applyTransforms = (item) => {
   set(item, '_value', transform(get(item,'value')));
   return item;
 };
-const copyObjectOrArray = (item) => {
-  if (is.object(item)) {
-    return Object.assign(item);
-  }
-  else if (is.array(item)) {
-    return [].concat(item);
-  }
-  else {
-    return item;
-  }
-};
 
 const fieldHasValidationFn = (item) => typeof item.validation === "function";
 const checkIfFieldFailsValidation = (field) => !field.validation(field.value);
-
+const requiredFieldsHaveValue = (field) => {
+  return field && (!field.required || !Em.isEmpty(field.value));
+};
 
 /**
  *
@@ -67,12 +58,6 @@ export default Em.Component.extend({
       .map(setDefaults);
   }),
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    console.log('DID RECEIVE ATTRS');
-    debugger;
-    console.log('DID RECEIVE ATTRS');
-  },
   allFinalValues: Em.computed('_formFields', 'passThrough', function () {
     const passThrough = is.object(get(this, 'passThrough')) ? get(this, 'passThrough') : {};
     const finalFormValues = _(get(this, '_formFields'))
@@ -83,12 +68,17 @@ export default Em.Component.extend({
       .value();
 
     return _.merge(finalFormValues, passThrough);
-  }),
+  }).volatile(),
 
   submitIsDisabled: Em.computed('_formFields.@each.value', function () {
-    return get(this, '_formFields')
+    const notAllRequiredFieldsFilled = !get(this, '_formFields')
+      .every(requiredFieldsHaveValue);
+
+    const notAllFieldsPassValidation = get(this, '_formFields')
       .filter(fieldHasValidationFn)
       .some(checkIfFieldFailsValidation);
+
+    return notAllRequiredFieldsFilled  || notAllFieldsPassValidation;
   }),
 
 
@@ -99,11 +89,9 @@ export default Em.Component.extend({
   actions: {
     onSubmitForm() {
       this._super(...arguments);
-
-      console.log('SUBMITTED FORM!!');
-      debugger;
+      const finalValues = this.get('allFinalValues');
+      get(this, 'callbackSubmit')(finalValues);
       this.$('form').trigger('reset');
-      get(this, 'callbackSubmit')(this.get('allFinalValues'));
     }
   }
 });

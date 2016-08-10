@@ -4,3 +4,9 @@
 @import 'partials/fontello';
 @import 'partials/main-styles';
 
+body {
+  img[src=""] {
+    border: 0 solid transparent;
+    border-image-width: 0;
+  }
+}

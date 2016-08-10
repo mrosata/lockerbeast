@@ -2,6 +2,8 @@ import Ember from 'ember';
 import is from 'lockerbeast/utils/is';
 
 export default Ember.Component.extend({
+  attributeBindings: ['required'],
+
   content: [],
   prompt: null,
   optionValuePath: 'value',
@@ -28,10 +30,10 @@ export default Ember.Component.extend({
 
     this.sendAction('willChangeAction', _selection);
 
-    if (this.get('optionValuePath')) {
-      this.set('selection', _selection[this.get('optionValuePath')]);
+    if (_selection && this.get('optionValuePath')) {
+      this.set('value', _selection[this.get('optionValuePath')]);
     } else {
-      this.set('selection', _selection);
+      this.set('value', _selection);
     }
 
     this.sendAction('didChangeAction', _selection);

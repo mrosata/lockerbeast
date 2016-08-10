@@ -1,8 +1,11 @@
 import Em from 'ember';
-import is from 'lockerbeast/utils/is';
 import _ from 'lodash';
 import {
-  applyToFirstCallableFn, capitalize, findOrCreate, queryRecordBy, pushHasManyToModel, setItemToModel, tapConsole
+  applyToFirstCallableFn,
+  capitalize,
+  findOrCreate,
+  pushHasManyToModel,
+  saveModelKeyAs
 } from 'lockerbeast/utils/ember-fp';
 
 // This bit of code figures out relationship key on member to a record and attaches relationship
@@ -57,36 +60,36 @@ export default Em.Service.extend({
     let categoryId = modelValues.category || null;
     let member = modelValues.member;
     let tags = modelValues.tags || [];
-    delete modelValues.category;
-    delete modelValues.tags;
 
     if (!member) {
       return Em.RSVP.reject(new Error("Recommendations must have a member property!"));
     }
 
     let recommendation = store
-      .createRecord('recommendation', modelValues);
+      .createRecord('recommendation', {
+        title: modelValues.title,
+        body: modelValues.body,
+        url: modelValues.url,
+        date: modelValues.date,
+        image: modelValues.image
+      });
 
     const recSave = recommendation.save();
 
     return recSave.then((record) => {
-      attachMemberToModel(member);
       const attachToModel = pushHasManyToModel(record, 'tags');
       const attachModelToSelf = _.partial(pushHasManyToModel, _, 'recommendations', record);
-      return Em.RSVP
-        .Promise.all(
-          [
-            this.rsvpFindOrCreateArrayOfTags(tags)
-              .then(tagModels => {
-                tagModels.map(attachToModel);
-                tagModels.map(attachModelToSelf);
-              }),
-            this.findCategoryById(categoryId)
-              .then(setItemToModel(record, 'category'))
-          ],
-          function() {
-            return record.save();
-          });
+
+      let tagsWork = this.rsvpFindOrCreateArrayOfTags(tags)
+        .then(tagModels => {
+          tagModels.map(attachToModel);
+          tagModels.map(attachModelToSelf);
+        });
+      let catWork = this.findCategoryById(categoryId)
+        .then(saveModelKeyAs(record, 'category'));
+
+      return Em.RSVP.allSettled([tagsWork, catWork])
+        .then(() => attachMemberToModel(member)(record));
     });
   },
 
@@ -94,7 +97,7 @@ export default Em.Service.extend({
   rsvpFindOrCreateArrayOfTags (tags) {
     const store = get(this, 'store');
     return Em.RSVP.Promise.all(
-      tags
+      [].concat(tags)
         .map((tagName) => Object({id: Em.String.dasherize(tagName), name: tagName}))
         .map((tagObject) => findOrCreate(store, 'tag', tagObject.id, tagObject))
     );
@@ -102,10 +105,8 @@ export default Em.Service.extend({
 
 
   findCategoryById(categoryId) {
-    alert(categoryId);
     return get(this, 'store')
-      .find('category', categoryId)
-      .catch(() => null);
+      .find('category', categoryId);
   }
 
 });

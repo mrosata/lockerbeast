@@ -2,12 +2,6 @@ import is from 'lockerbeast/utils/is';
 import _ from 'lodash';
 
 export const curry = _.curry;
-// get :: Object -> Mixed
-let get;
-get = curry((obj, attr) => is.callable(obj.get) ? obj.get(attr) : obj[attr]);
-// set :: Object ->
-let set;
-set = curry((obj, attr, val) => is.callable(obj.set) ? obj.set(attr, val) : obj[attr] = val);
 // then :: Function -> Promise -> Promise
 export const then = curry((fn, thenable) => thenable.then(fn));
 // findFromStore :: Store -> String, String -> Promise
@@ -80,21 +74,23 @@ export const findOrCreate = curry(function _findOrCreate(store, recordTypeStr, r
     });
 });
 
-export const pushHasManyToModel = curry(function (modelToSave, hasManyKey, valueToPush) {
-  if (!get(modelToSave, hasManyKey)) {
-    set(modelToSave, hasManyKey, [valueToPush]);
-  } else {
-    get(modelToSave, hasManyKey).pushObject(valueToPush);
+export const pushHasManyToModel = curry(function (modelWithHasManyProp, hasManyKey, valueToPush) {
+  if (!get(modelWithHasManyProp, hasManyKey)) {
+    set(modelWithHasManyProp, hasManyKey, [valueToPush]);
   }
+  else {
+    get(modelWithHasManyProp, hasManyKey).pushObject(valueToPush);
+  }
+  return modelWithHasManyProp.save();
+});
+
+export const saveModelKeyAs = curry((modelToSave, keyToSet, valueToSet) => {
+  set(modelToSave, keyToSet, valueToSet);
   return modelToSave.save();
 });
 
-export const setItemToModel = curry((modelToSave, keyToSet, valueToSet) => set(modelToSave, keyToSet, valueToSet));
-
 export default {
   // Lambda functions
-  get,
-  set,
   then,
   findFromStore,
   findRecord,
@@ -125,7 +121,7 @@ export default {
   applyToFirstCallableFn,
   pushHasManyToModel,
   findOrCreate,
-  setItemToModel,
+  saveModelKeyAs,
 
   // Lodash implementations
   partial: _.partial,
