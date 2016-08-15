@@ -1,0 +1,10 @@
+<div class="row">
+  {{welcome.signup-form title="Sign-Up" onSubmitForm='onSubmitForm'}}
+</div>
+
+<div class="row">
+  Already a member? {{#link-to "welcome.login"}}Click here to login.{{/link-to}}
+  <br>
+</div>
+
+{{outlet}}

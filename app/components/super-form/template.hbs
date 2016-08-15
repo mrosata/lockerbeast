@@ -22,6 +22,14 @@
           placeholder=formPart.placeholder}}
 
         {{else}}
+
+          {{#if ('is-equal' 'textarea' formPart.type)}}
+            {{textarea
+            value=formPart.value
+            class=formPart.class
+            required=formPart.required
+            placeholder=formPart.placeholder}}
+          {{/if}}
         {{! --- FIELD --- SELECT --- INPUT --- }}
           {{#if ('is-equal' 'select' formPart.type)}}
 

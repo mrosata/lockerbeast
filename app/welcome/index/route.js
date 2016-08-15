@@ -1,4 +1,5 @@
 import Em from 'ember';
+import _ from 'lodash';
 
 export default Em.Route.extend({
 
@@ -10,22 +11,36 @@ export default Em.Route.extend({
      */
     onSubmitForm (newUser) {
       const authService = this.get('auth');
+      const bound = {
+        login: _.bind(authService.login, authService, newUser.get('email'), newUser.get('password')),
+        createUserProfile: _.bind(authService.createUserProfile, authService, newUser)
+      };
+
       authService
         .signUpUser(newUser)
-        .then(() => authService.login(newUser.get('email'), newUser.get('password')))
-        .then(() => authService.createUserProfile(newUser))
+        .then( bound.login )
+        .then( bound.createUserProfile )
         .then(() => this.transitionTo('home'))
         .catch(error => {
-          // Catch errors propigated from within promise chain.
           Em.Logger.error("Error in Promise Chain User/UserProfile Creation", error);
-
-          // Handle User Creation Error
-          for (const err of error.errors) {
-            alert(err.message);
-          }
-          return void 0;
+          alert(error.message || error.code);
+          return void(0);
         });
+    },
+
+
+    /**
+     * Send user credentials to login() auth service and
+     * then transition to home route.
+     *
+     * @param userCredentials
+     */
+    onLoginSubmit(userCredentials) {
+      this.get('auth')
+        .login(userCredentials.get('username'), userCredentials.get('password'))
+        .then(() => this.transitionTo('home')).catch(err => Em.Logger.error(err.message));
     }
 
   }
+
 });

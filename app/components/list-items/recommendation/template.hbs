@@ -16,6 +16,7 @@
 
       <div class="col-md-8 col-sm-8">
         <div class="post-txt">
+          {{ratings-widget rating=item.currentRating model=item}}
           <h3> {{#link-to 'recommendations.single' item class="title"}} {{item.title}} {{/link-to}}
             by: {{item.member.username}}
           </h3>

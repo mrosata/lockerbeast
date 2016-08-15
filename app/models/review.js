@@ -9,6 +9,7 @@ export default Model.extend({
   date: attr('number', {
     defaultValue: getDefaultDate
   }),
+  category: belongsTo('category', {inverse: null}),
   image: attr(),
   body: attr(),
   ratings: hasMany('rating')

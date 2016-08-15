@@ -1,19 +1,42 @@
 import Em from 'ember';
+import _ from 'lodash';
 
 export default Em.Service.extend({
 
   store: Em.inject.service(),
   session: Em.inject.service(),
-  
-  user: Em.computed('session.uid', function() {
-    return this.get('store').find('member', this.get('session.uid'));
-  }),
+  firebaseApp: Em.inject.service(),
+
+  member: null,
+  ratings: [],
+
+  init() {
+    this._super(...arguments);
+    const session = get(this, 'session');
+    session.addObserver('isAuthenticated', _.bind(this.setUserIfSessionUp, this, session));
+  },
+
+  setUserIfSessionUp(session) {
+
+    if (get(session, 'isAuthenticated')) {
+
+      get(this, 'store')
+        .find('member', get(session, 'uid'))
+        .then(member => {
+          set(this, 'member', member);
+          set(this, 'memberRatings', member.get('ratings') || []);
+        });
+    }
+  },
+
   /**
    * Logout the current user from Firebase using global session.
    * @returns {Em.RSVP.Promise}
    */
   logout() {
-    this.get('session').fetch('firebase').finally(() => this.get('session').close('firebase'));
+    this.get('session').fetch('firebase')
+      .finally(
+        () => this.get('session').close('firebase'));
   },
 
 
@@ -23,9 +46,10 @@ export default Em.Service.extend({
    * @returns {Em.RSVP.Promise}
    */
   signUpUser(newUser){
-    const fbAuth = firebase.auth();
+    const fbAuth = get(this, 'firebaseApp').auth();
 
-    return fbAuth.createUserWithEmailAndPassword( newUser.get('email'), newUser.get('createPassword'));
+    return fbAuth.createUserWithEmailAndPassword(
+      _.toLowerCase( newUser.get('email')), newUser.get('createPassword'));
   },
 
 
@@ -50,18 +74,19 @@ export default Em.Service.extend({
    * @param newUser
    * @return {Promise}
    */
-  createUserProfile(newUser) {
+  createUserProfile(newUser, session) {
 
-    let userRecord = this.get('store').createRecord('member', {
-      id: this.get('session.uid'),
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      birthday: moment(newUser.birthday, 'YYYY-MM-DD').utc().toISOString(),
-      username: newUser.username,
-      country: newUser.country,
-      gender: newUser.gender,
-      email: newUser.email
-    });
+    let userRecord = get(this, 'store')
+      .createRecord('member', {
+        id: get(session, 'uid'),
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        birthday: moment(newUser.birthday, 'YYYY-MM-DD').utc().toISOString(),
+        username: newUser.username,
+        country: newUser.country,
+        gender: newUser.gender,
+        email: newUser.email
+      });
 
     return userRecord.save();
   }

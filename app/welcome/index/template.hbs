@@ -1,10 +1,14 @@
 <div class="row">
-  {{welcome.signup-form title="Sign-Up" onSubmitForm='onSubmitForm'}}
+  {{welcome/login-form title="Login" onLoginSubmit='onLoginSubmit'}}
+</div>
+
+<div class="row social-logins">
+  {{welcome/social-login}}
 </div>
 
 <div class="row">
-    Already a member? {{#link-to "welcome.login"}}Click here to login.{{/link-to}}
-    <br>
+  Not yet a member? {{#link-to "welcome.index"}}Click here to register.{{/link-to}}
+  <br>
 </div>
 
-{{outlet}}
+{{liquid-outlet}}

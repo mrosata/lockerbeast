@@ -6,12 +6,17 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.authenticatedRoute('home');
+
+  this.route('logout');
   this.route('welcome', function() {
-    this.route('login');
     this.route('auth', {path: '/auth'});
+    this.route('signup');
   });
-  this.route('reviews');
+  this.authenticatedRoute('home');
+  this.route('reviews', function() {
+    this.route('create');
+    this.route('single');
+  });
   this.route('recommendations', function() {
     this.route('single', {path: '/single/:id'});
     this.route('create');

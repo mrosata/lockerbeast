@@ -1,1 +1,35 @@
 {{yield}}
+
+<div class="starRating">
+  <span class="rating">
+    <span class={{if-equal rating 5 'rated-as'}}>☆</span>
+    <span class={{if-equal rating 4 'rated-as'}}>☆</span>
+    <span class={{if-equal rating 3 'rated-as'}}>☆</span>
+    <span class={{if-equal rating 2 'rated-as'}}>☆</span>
+    <span class={{if-equal rating 1 'rated-as'}}>☆</span>
+  </span>
+
+  {{#if memberCanVote}}
+    <form {{action 'addNewRating' on='submit'}}>
+      {{#radio-button groupValue=newRatingValue value="5" changed='setNewRatingValue'}}
+        5
+      {{/radio-button}}
+      {{#radio-button groupValue=newRatingValue value="4" changed='setNewRatingValue'}}
+        4
+      {{/radio-button}}
+      {{#radio-button groupValue=newRatingValue value="3" changed='setNewRatingValue'}}
+        3
+      {{/radio-button}}
+      {{#radio-button groupValue=newRatingValue value="2" changed='setNewRatingValue'}}
+        2
+      {{/radio-button}}
+      {{#radio-button groupValue=newRatingValue value="1" changed='setNewRatingValue'}}
+        1
+      {{/radio-button}}
+
+      {{#if newRatingValue}}
+        <button type="submit" class="btn btn-info btn-outline"> RATE </button>
+      {{/if}}</form>
+  {{/if}}
+
+</div>

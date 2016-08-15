@@ -17,6 +17,11 @@
       <span class="date-icon icon-clock"> {{ pretty-date model.date 'DD MMM, YYYY' }} </span>
       <span class="date-icon icon-rss"> {{ model.member.username }} </span>
 
+
+      <div class="col-sm-6 col-md-3">
+        {{ratings-widget rating=model.currentRating model=model}}
+      </div>
+
       {{#each paragraphs as |pText|}}
         <p>{{ pText }}</p>
       {{/each}}

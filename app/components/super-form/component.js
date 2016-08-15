@@ -41,6 +41,8 @@ const requiredFieldsHaveValue = (field) => {
  *   }
  * }
  */
+
+
 export default Em.Component.extend({
 
   formClass: 'form form-horizontal',

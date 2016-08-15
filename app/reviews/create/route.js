@@ -24,18 +24,12 @@ export default Em.Route.extend({
           validation: (value) => value
         }, {
           attr: 'body',
-          type: 'textarea',
+          type: 'text',
           default: '',
           required: true,
           label: 'Body:',
           class: 'form-control',
           validation: (value) => value.length > 1
-        }, {
-          attr: 'url',
-          type: 'text',
-          default: '',
-          label: 'URL:',
-          class: 'form-control'
         }, {
           attr: 'category',
           type: 'select',
@@ -47,12 +41,12 @@ export default Em.Route.extend({
           optionsPromise: this.store.findAll('category')
             .then(categories => categories.toArray()
               .map(category => {
-                  return {
-                    value: get(category, 'id'),
-                    text: get(category, 'name'),
-                    description: get(category, 'description')
-                  };
-                })
+                return {
+                  value: get(category, 'id'),
+                  text: get(category, 'name'),
+                  description: get(category, 'description')
+                };
+              })
             )
         }, {
           attr: 'tags',
