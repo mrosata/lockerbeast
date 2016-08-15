@@ -455,13 +455,6 @@ ul.post-tags li:hover a {color:$bg-primary;}
 .section-post-comment button.btn-primary {border-radius:0; }
 .section-post-comment .form-control { border-radius:0; drop-shadow:0; border-color:#f1f2f5;}
 
-/* ----- RESPONSIVE ----- */
-@media(max-width:990px) {
-  .navbar-collapse.collapse {display: none !important;}
-  .navbar-collapse {overflow-x: visible !important;}
-  .navbar-collapse.in {overflow-y: auto !important;}
-  .collapse.in {display: block !important;}
-}
 
 @media (max-width: 768px) {}
 @media (max-width: 990px) {}

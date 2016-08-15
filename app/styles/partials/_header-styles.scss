@@ -1,0 +1,21 @@
+
+.navbar-header {
+
+  .navbar-brand {
+    float: left;
+    display: inline-block;
+    .title {
+      font-size: 1.15rem;
+    }
+  }
+  @media screen and (max-width: 990px) and (min-width: 768px) {
+    float: left;
+
+    #navbar {
+      clear: both;
+      &.navbar-collapse.in {
+        //overflow-y: visible !important;
+      }
+    }
+  }
+}

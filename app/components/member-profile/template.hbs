@@ -1,0 +1,29 @@
+{{yield}}
+
+<div class="col-md-4 block-author">
+  {{#if member.photo}}
+
+    <img class="img-responsive gap-bottom" alt="Member photo" src={{member.photo}}>
+  {{else}}
+    <img src="/img/author-thumb.jpg" class="img-responsive gap-bottom" alt="Default member photo">
+  {{/if}}
+</div>
+
+<div class="col-md-8 block-author">
+  <h1 class="section-title sbx">About {{member.fullName}}</h1>
+  <div class="row">
+    <div class="col-md-12 block-author">
+      <ul class="nav navbar-nav author-social">
+        <li><a href="#" class="demo-icon icon-gplus social-icons"></a></li>
+        <li><a href="#" class="demo-icon icon-pinterest social-icons"></a></li>
+        <li><a href="#" class="demo-icon icon-facebook social-icons"></a></li>
+        <li><a href="#" class="demo-icon icon-twitter social-icons"></a></li>
+        <li><a href="#" class="demo-icon icon-vimeo social-icons"></a></li>
+        <li><a href="#" class="demo-icon icon-rss social-icons"></a></li>
+      </ul>
+    </div>
+  </div>
+  <p>
+    {{member.bio}}
+  </p>
+</div>

@@ -1,14 +1,27 @@
+$starFontSize: 1rem;
+$starLetterSpacing: 1rem;
+$starWidth: .15rem;
+$starIconContent: "\2605";
+
 .starRating {
+  &.signed-in {
+    &:hover {
+      color: blue;
+    }
+    .rating {
+      color: red;
+    }
+  }
   .rating {
     unicode-bidi: bidi-override;
     direction: rtl;
-    font-size: 1.6rem;
-    letter-spacing: 1rem;
+    font-size: $starFontSize;
+    letter-spacing: $starLetterSpacing;
   }
   .rating > span {
     display: inline-block;
     position: relative;
-    width: .15em;
+    width: $starWidth;
     &.clickable {
       cursor: pointer;
     }
@@ -17,7 +30,7 @@
   .rating > span.rated-as:before,
   .rating > span.rated-as ~ span:before,
   .rating > span.unrated:hover ~ span:before {
-    content: "\2605";
+    content: $starIconContent;
     position: absolute;
   }
 }

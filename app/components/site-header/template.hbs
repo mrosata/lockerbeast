@@ -1,83 +1,116 @@
 <div class="container-fluid headerbar">
-    <div class="container clearfix">
+  <div class="container clearfix">
 
-        <header>
-            <nav class="navbar navbar-default">
-                <div class="row">
-                    <div class="navbar-header">
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="row">
+          <div class="navbar-header">
 
-                      {{#if session.isAuthenticated}}
-                      {{! Show the nav-bar button only to authenticated users }}
-                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                              <span class="sr-only">Toggle navigation</span>
-                              <span class="icon-bar"></span>
-                              <span class="icon-bar"></span>
-                              <span class="icon-bar"></span>
-                          </button>
-                      {{/if}}
+            {{#if session.isAuthenticated}}
+            {{! Show the nav-bar button only to authenticated users }}
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            {{/if}}
 
-                        <a class="navbar-brand" href="#">
-                            <img alt="Posted News/Magazine Theme" src="img/posted_theme_logo.png">
-                        </a>
+            <div class="navbar-brand">
+              <h2 class="logo title">L<span class="hidden-lg">OCKER</span>B<span class="hidden-lg">EAST</span></h2>
+            </div>
 
-                    </div>
+          </div>
 
-                  {{#if session.isAuthenticated}}
-                  {{! Show the nav-bar dropdowns only to authenticated users }}
-                      <div id="navbar" class="navbar-collapse collapse">
-                          <ul class="nav navbar-nav">
-                              <li class="active dropdown">
-                                  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Voice of the People <span class="caret"></span></a>
-                                  <ul class="dropdown-menu">
-                                      <li>
-                                        {{#link-to "home"}}Main{{/link-to}}
-                                      </li>
-                                      <li>
-                                        {{#link-to "reviews"}}Reviews{{/link-to}}
-                                      </li>
-                                      <li>
-                                        {{#link-to "recommendations"}}Recommendations{{/link-to}}
-                                      </li>
-                                  </ul>
-                              </li>
+          {{! Show the nav-bar dropdowns only to authenticated users }}
+          <div id="navbar" class="navbar-collapse collapse">
 
-                              <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Classifieds <span class="caret"></span></a>
-                                  <ul class="dropdown-menu">
-                                      <li>{{#link-to "market"}}Marketplace{{/link-to}}</li>
-                                  </ul>
-                              </li>
 
-                              <li>
-                                {{#link-to "contact"}}Contact{{/link-to}}
-                              </li>
-                              <li>
-                                  <a href="#" class="logout" {{action 'logout' on='click'}}>Logout</a>
-                              </li>
-                          </ul>
+            <ul class="nav navbar-nav navbar-right toolbar">
+              <li><a href="#" class="demo-icon icon-gplus social-icons"></a></li>
+              <li><a href="#" class="demo-icon icon-pinterest social-icons"></a></li>
+              <li><a href="#" class="demo-icon icon-facebook social-icons"></a></li>
+              <li><a href="#" class="demo-icon icon-twitter social-icons"></a></li>
+              <li><a href="#" class="demo-icon icon-vimeo social-icons"></a></li>
+              <li><a href="#" class="demo-icon icon-rss social-icons"></a></li>
+              <li>
+                <div class="search-block">
+                  <form>
+                    <input type="search" placeholder="Search">
+                  </form>
+                </div>
+              </li>
+            </ul>
 
-                          <ul class="nav navbar-nav navbar-right toolbar">
-                              <li><a href="#" class="demo-icon icon-gplus social-icons"></a></li>
-                              <li><a href="#" class="demo-icon icon-pinterest social-icons"></a></li>
-                              <li><a href="#" class="demo-icon icon-facebook social-icons"></a></li>
-                              <li><a href="#" class="demo-icon icon-twitter social-icons"></a></li>
-                              <li><a href="#" class="demo-icon icon-vimeo social-icons"></a></li>
-                              <li><a href="#" class="demo-icon icon-rss social-icons"></a></li>
-                              <li>
-                                  <div class="search-block">
-                                      <form>
-                                          <input type="search" placeholder="Search">
-                                      </form>
-                                  </div>
-                              </li>
-                          </ul>
-                      </div><!--/.nav-collapse -->
+            {{#if session.isAuthenticated}}
+              <ul class="nav navbar-nav">
+                <li class="active dropdown">
+                  <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Voice of the People <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      {{#link-to "home"}}Main{{/link-to}}
+                    </li>
+                    <li>
+                      {{#link-to "reviews"}}Reviews{{/link-to}}
+                    </li>
+                    <li>
+                      {{#link-to "recommendations"}}Recommendations{{/link-to}}
+                    </li>
+                  </ul>
+                </li>
 
-                  {{/if}}
-                </div><!--/.container-fluid -->
-            </nav>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Classifieds <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li>{{#link-to "market"}}Marketplace{{/link-to}}</li>
+                  </ul>
+                </li>
 
-        </header>
 
-    </div>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dashboard <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li>{{#link-to "dashboard.index"}}Dashboard{{/link-to}}</li>
+
+                    <li>{{#link-to "dashboard.profile"}}Profile{{/link-to}}</li>
+                  </ul>
+                </li>
+
+
+                <li>
+                  {{#link-to "contact"}}Contact{{/link-to}}
+                </li>
+                <li>
+                  {{#link-to "logout" class="logout"}}Logout{{/link-to}}
+                </li>
+              </ul>
+
+            {{else}}
+              <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign-in/Sign-up<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li>{{#link-to "welcome.index"}}Sign-in{{/link-to}}</li>
+
+                    <li>{{#link-to "welcome.signup"}}Sign-up (join){{/link-to}}</li>
+                  </ul>
+                </li>
+
+                <li>
+                  {{#link-to "contact"}}Contact{{/link-to}}
+                </li>
+
+              </ul>
+
+            {{/if}}
+
+          </div><!--/.nav-collapse -->
+
+        </div><!--/.container-fluid -->
+      </nav>
+
+    </header>
+
+  </div>
 </div>

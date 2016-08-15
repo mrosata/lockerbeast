@@ -34,9 +34,7 @@ export default Em.Service.extend({
    * @returns {Em.RSVP.Promise}
    */
   logout() {
-    this.get('session').fetch('firebase')
-      .finally(
-        () => this.get('session').close('firebase'));
+    return this.get('session').close('firebase');
   },
 
 
@@ -65,6 +63,9 @@ export default Em.Service.extend({
       provider: 'password',
       email: email,
       password: password
+    }).catch(error => {
+      Em.Logger.error('[*] - ' + error);
+      return this.logout();
     });
   },
 

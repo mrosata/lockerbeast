@@ -6,25 +6,29 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-
   this.route('logout');
   this.route('welcome', function() {
     this.route('auth', {path: '/auth'});
     this.route('signup');
   });
   this.authenticatedRoute('home');
-  this.route('reviews', function() {
+  this.authenticatedRoute('reviews', function() {
     this.route('create');
     this.route('single');
   });
-  this.route('recommendations', function() {
+  this.authenticatedRoute('recommendations', function() {
     this.route('single', {path: '/single/:id'});
     this.route('create');
   });
-  this.route('market');
+  this.authenticatedRoute('market');
   this.route('contact');
-  this.route('search', function() {
+  this.authenticatedRoute('search', function() {
     this.route('tags', {path: '/:tagId'});
+  });
+
+  this.route('four-oh-four', {path: '/*path'});
+  this.route('dashboard', function() {
+    this.route('profile');
   });
 });
 

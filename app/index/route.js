@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Em from 'ember';
 
-export default Ember.Route.extend({
+export default Em.Route.extend({
 
   /**
    * Check if the user is logged in.
@@ -12,6 +12,13 @@ export default Ember.Route.extend({
     }
     else {
       this.transitionTo('home');
+    }
+  },
+
+  actions: {
+    error: function (error) {
+      Em.Logger.error(error);
+      this.transitionTo('/not-found');
     }
   }
 
