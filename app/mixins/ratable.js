@@ -13,13 +13,16 @@ export default Em.Mixin.create({
     return this.get('ratableContent')
       .then((ratableContent) => {
         if (!ratableContent) {
-          alert(get(this, 'constructor.modelName'));
           ratableContent = this.store.createRecord('ratable-content', {
-            // Need to dynamically create this property
             // ['review'] or ['recommendation'] or ['article']
             [get(this, 'constructor.modelName')]: this
           });
-          return ratableContent.save();
+          return ratableContent.save()
+            .then(ratableContent => {
+              set(this, 'ratableContent', ratableContent);
+              this.save();
+              return ratableContent;
+            });
         }
         return ratableContent;
       });

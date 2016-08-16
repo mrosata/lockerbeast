@@ -3,8 +3,10 @@
 # compiled output
 /dist
 /lbApp
+/public_html
 /tmp
 lbApp.zip
+public_html.zip
 
 # dependencies
 /node_modules

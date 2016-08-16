@@ -4,9 +4,10 @@ import {findFromStore} from 'lockerbeast/utils/ember-fp';
 export default Em.Component.extend({
   auth: Em.inject.service(),
   store: Em.inject.service(),
+  recordFactory: Em.inject.service(),
   session: Em.inject.service(),
 
-  rating: null,
+  rating: 3,
   memberRating: null,
   model: null,
 
@@ -22,44 +23,64 @@ export default Em.Component.extend({
     let item = get(this, 'model');
 
     if (item) {
-      item.getAverageRating()
-        .then(averageRating => set('rating', averageRating));
+      this.updateAverageRating();
     }
 
   },
 
+
+  updateAverageRating() {
+    get(this, 'model').getAverageRating()
+      .then(averageRating => set(this, 'averageRating', averageRating));
+
+  },
+
+
   /**
-   * Create new 'rating' record.
-   * link to current model and current user.
+   * Create or Update 'rating' record related to
+   * this item and this member.
    */
-  addNewRating() {
+  addNewRating(ratingValue) {
     const model = get(this, 'model');
 
-    get(this, 'member')
+    return get(this, 'member')
       .then((member) => {
 
         model.getRatingsContainer()
           .then(ratingsContainer => {
 
-            let rating = get(this, 'store')
-              .createRecord('rating', {
-                item: ratingsContainer,
-                value: get(this, 'memberRating'),
-                date: moment.utc().unix()
-              });
-
-            rating
-              .save()
-              .then(rating => {
-                get(ratingsContainer, 'ratings').pushObject(rating);
-                get(member, 'ratings').pushObject(rating);
-                set(rating, 'member', member);
-
-                ratingsContainer.save();
-                member.save();
-                rating.save();
+            ratingsContainer.getRatingsArray()
+              .then(ratings => {
+                // Get the rating made by member
+                return ratings.find(rating => {
+                  return get(rating, 'member.id') === get(member, 'id');
+                });
               })
-              .catch(Em.Logger.error);
+              .then(rating => {
+                if (rating) {
+                  // just need to update values since rating exists.
+                  rating.set('value', ratingValue);
+                  rating.set('date', moment.utc().unix());
+                  return rating.save();
+                }
+                else {
+                  return get(this, 'recordFactory').createRating({
+                    item: ratingsContainer,
+                    value: ratingValue,
+                    member: member
+                  })
+                    .then(rating => {
+                      // This rating is new so it needs to be put into container
+                    get(ratingsContainer, 'ratings').pushObject(rating);
+                    get(member, 'ratings').pushObject(rating);
+                    set(rating, 'member', member);
+
+                    ratingsContainer.save();
+                    member.save();
+                    rating.save();
+                  });
+                }
+              });
           });
       });
 
@@ -68,8 +89,11 @@ export default Em.Component.extend({
 
   actions: {
 
-    addNewRating() {
-      this.addNewRating();
+    addNewRating(ratingValue) {
+      Em.Logger.log(`this`, this);
+      Em.Logger.log(`this.updateAverageRating`, this.updateAverageRating);
+      return this.addNewRating(ratingValue)
+        .then((/*rating*/) => this.updateAverageRating());
     },
 
     setNewRatingValue(val) {

@@ -42,6 +42,26 @@ export default Em.Service.extend({
   },
 
 
+  createRating(modelValues) {
+    const store = get(this, 'store');
+    let member = modelValues.member;
+    let date = modelValues.member || moment.utc().unix();
+    let value = modelValues.value || null;
+
+    if (!member) {
+      return Em.RSVP.reject(
+        new Error("Ratings must have a member property!"));
+    }
+
+    let rating = store.createRecord('rating', {
+      member: member,
+      value: value,
+      date: date
+    });
+    
+    return rating.save();
+  },
+
   createReview(modelValues) {
     const store = get(this, 'store');
     let categoryId = modelValues.category || null;

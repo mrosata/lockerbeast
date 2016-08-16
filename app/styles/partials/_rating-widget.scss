@@ -1,43 +1,81 @@
 $starFontSize: 1.5rem;
-$starLetterSpacing: 1rem;
-$starWidth: .15rem;
+$starLetterSpacing: .1rem;
+$starWidth: 1.75rem;
+$starMobileFontSize: .9rem;
+$starMobileLetterSpacing: .1rem;
+$starMobileWidth: .75rem;
 $starIconContent: "\2605";
+$starColorAvgRating: #5283ff;
+$starColorMemberRating: #ff6657;
+$starColorEmptyRating: #a6aea3;
 
 .starRating {
+
+  position: relative;
+  overflow: hidden;
+  width: 12 * ($starLetterSpacing + $starWidth);
+  height: 1.1 * ($starLetterSpacing + $starWidth);
+
+  .star-ratings-container {
+    position: absolute;
+    margin:0;
+    padding: 0;
+    width: 20 * $starWidth;
+  }
   &.signed-in {
     span:hover:before,
     span:hover ~ span:before {
       content: $starIconContent;
-      color: #5283ff !important;
+      color: $starColorMemberRating !important;
       position: absolute;
-    }
-    span.unrated  {
-      content: '' !important;
-      position: static !important;
-    }
-    span.rated-as:before,
-    span.rated-as ~ span:before,
-    .rating {
-      color: #ff6657 !important;
+      cursor: pointer;
     }
   }
+  span.avg:before,
+  span.avg ~ span:before {
+    color: $starColorAvgRating;
+  }
+
+
+
+
   .rating {
+    position: relative;
+    // Size and direction of the stars
     unicode-bidi: bidi-override;
     direction: rtl;
     font-size: $starFontSize;
     letter-spacing: $starLetterSpacing;
-  }
-  .rating > span {
-    display: inline-block;
-    position: relative;
-    width: $starWidth;
-    &.clickable {
-      cursor: pointer;
+
+    > span {
+      display: inline-block;
+      position: relative;
+      width: $starWidth;
+      color: $starColorEmptyRating;
+      &:before,
+      & ~ span:before {
+        content: $starIconContent;
+        position: absolute;
+      }
+
     }
   }
-  .rating > span.rated-as:before,
-  .rating > span.rated-as ~ span:before {
-    content: $starIconContent;
-    position: absolute;
+
+
+  @media screen and (max-width: 500px) {
+    width: 14 * ($starMobileLetterSpacing + $starMobileWidth);
+    height: 3 * ($starMobileLetterSpacing + $starMobileWidth);
+    .rating {
+      > span {
+        width: $starMobileWidth;
+      }
+    }
+    .rating,
+    .rating:before {
+      font-size: $starMobileFontSize !important;
+      width: 10px;
+
+    }
   }
 }
+

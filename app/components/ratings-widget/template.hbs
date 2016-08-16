@@ -1,40 +1,78 @@
 {{yield}}
 
+<small>AVERAGE {{averageRating}}</small>
+
 <div class="starRating {{if memberCanVote 'signed-in'}}">
-  <span class="rating">
-    <span class="{{if-lte 5 rating 'rated-as' 'unrated'}} {{if-lte 5 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 5}}>☆</span>
-    <span class="{{if-lte 4 rating 'rated-as' 'unrated'}} {{if-lte 4 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 4}}>☆</span>
-    <span class="{{if-lte 3 rating 'rated-as' 'unrated'}} {{if-lte 3 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 3}}>☆</span>
-    <span class="{{if-lte 2 rating 'rated-as' 'unrated'}} {{if-lte 2 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 2}}>☆</span>
-    <span class="{{if-lte 1 rating 'rated-as' 'unrated'}} {{if-lte 1 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 1}}>☆</span>
-  </span>
+  <div class="empty star-ratings-container">
+    <span class="empty rating">
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+      <span>☆</span>
+    </span>
+  </div>
+
+  <div class="average star-ratings-container">
+    <span class="average rating">
+      <span class={{if-lte 10 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 10}}>☆</span>
+      <span class={{if-lte 9 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 9}}>☆</span>
+      <span class={{if-lte 8 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 8}}>☆</span>
+      <span class={{if-lte 7 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 7}}>☆</span>
+      <span class={{if-lte 6 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 6}}>☆</span>
+      <span class={{if-lte 5 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 5}}>☆</span>
+      <span class={{if-lte 4 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 4}}>☆</span>
+      <span class={{if-lte 3 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 3}}>☆</span>
+      <span class={{if-lte 2 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 2}}>☆</span>
+      <span class={{if-lte 1 averageRating 'avg' 'unrated'}} {{action 'addNewRating' 1}}>☆</span>
+    </span>
+  </div>
+
+  <!--
+
+  <div class="member star-ratings-container">
+    <span class="member rating">
+      <span class={{if-equal 5 memberRating 'rated-as' 'unrated'}}>☆</span>
+      <span class={{if-equal 4 memberRating 'rated-as' 'unrated'}}>☆</span>
+      <span class={{if-equal 3 memberRating 'rated-as' 'unrated'}}>☆</span>
+      <span class={{if-equal 2 memberRating 'rated-as' 'unrated'}}>☆</span>
+      <span class={{if-equal 1 memberRating 'rated-as' 'unrated'}}>☆</span>
+    </span>
+  </div>-->
+
+</div>
+
+  <!--
 
   <span>Average: {{rating}} <br>
-    Member: {{memberRating}}</span>
+    Member: {{memberRating}}</span>-->
 
 
 
-<!--  {{!#if memberCanVote}}
+  <!--  {{!#if memberCanVote}}
     <form {{!action 'addNewRating' on='submit'}}>
       {{!#radio-button groupValue=newRatingValue value="5" changed='setNewRatingValue'}}
         5
       {{!/radio-button}}
-      {{!#radio-button groupValue=newRatingValue value="4" changed='setNewRatingValue'}}
+    {{!#radio-button groupValue=newRatingValue value="4" changed='setNewRatingValue'}}
         4
       {{!/radio-button}}
-      {{!#radio-button groupValue=newRatingValue value="3" changed='setNewRatingValue'}}
+    {{!#radio-button groupValue=newRatingValue value="3" changed='setNewRatingValue'}}
         3
       {{!/radio-button}}
-      {{!#radio-button groupValue=newRatingValue value="2" changed='setNewRatingValue'}}
+    {{!#radio-button groupValue=newRatingValue value="2" changed='setNewRatingValue'}}
         2
       {{!/radio-button}}
-      {{!#radio-button groupValue=newRatingValue value="1" changed='setNewRatingValue'}}
+    {{!#radio-button groupValue=newRatingValue value="1" changed='setNewRatingValue'}}
         1
       {{!/radio-button}}
 
-      {{!#if newRatingValue}}
+    {{!#if newRatingValue}}
         <button type="submit" class="btn btn-info btn-outline"> RATE </button>
       {{!/if}}</form>
   {{!/if}}-->
-
-</div>
