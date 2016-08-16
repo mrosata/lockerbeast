@@ -1,15 +1,24 @@
-$starFontSize: 1rem;
+$starFontSize: 1.5rem;
 $starLetterSpacing: 1rem;
 $starWidth: .15rem;
 $starIconContent: "\2605";
 
 .starRating {
   &.signed-in {
-    &:hover {
-      color: blue;
+    span:hover:before,
+    span:hover ~ span:before {
+      content: $starIconContent;
+      color: #5283ff !important;
+      position: absolute;
     }
+    span.unrated  {
+      content: '' !important;
+      position: static !important;
+    }
+    span.rated-as:before,
+    span.rated-as ~ span:before,
     .rating {
-      color: red;
+      color: #ff6657 !important;
     }
   }
   .rating {
@@ -26,10 +35,8 @@ $starIconContent: "\2605";
       cursor: pointer;
     }
   }
-  .rating > span.unrated:hover:before,
   .rating > span.rated-as:before,
-  .rating > span.rated-as ~ span:before,
-  .rating > span.unrated:hover ~ span:before {
+  .rating > span.rated-as ~ span:before {
     content: $starIconContent;
     position: absolute;
   }

@@ -1,1 +1,37 @@
 {{yield}}
+
+
+{{! Might not need this outter div, it was on the section wrapper (but wasn't wrapping each item)}}
+<div class="section-block-v1 section-category-list">
+
+  <div class="row thumb-medium-with-content">
+
+    <!-- Post -->
+    <article class="col-md-6 col-sm-12 col-xs-6 post post-spacer">
+      <div class="row">
+        <div class="col-md-6 col-sm-4">
+          <div class="entry-header">
+            {{#if item.image}}
+              <img class="img-responsive" alt="Image for recommendation listing" src={{item.image}}>
+            {{else}}
+              <img src="" alt="Need Default Image Here For When Users Don't Include Images In Their Recommendations!">
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-8">
+          <div class="post-txt">
+            {{ratings-widget rating=item.currentRating model=item}}
+            <h3> {{#link-to 'recommendations.single' item class="title"}} {{item.title}} {{/link-to}}
+              by: {{item.member.username}}
+            </h3>
+            <a href="#category" class="caticon icon-space-medium"><i class="icon-clock"></i><span class="lifestyle"></span>25 January, 2015</a>
+            <p class="hidden-sm hidden-xs">{{itemSummary}}...<br></p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+</div>

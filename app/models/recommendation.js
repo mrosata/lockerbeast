@@ -3,8 +3,9 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import {belongsTo, hasMany} from 'ember-data/relationships';
 import {getDefaultDate} from 'lockerbeast/utils/date-tools';
+import RatableMixin from 'lockerbeast/mixins/ratable';
 
-export default Model.extend({
+export default Model.extend(RatableMixin, {
   // This is the way to link to the ratings (EmberFire doesn't support polymorphism)
   ratableContent: belongsTo('ratable-content'),
 
@@ -18,35 +19,5 @@ export default Model.extend({
   tags: hasMany('tag', {inverse: 'recommendations'}),
   date: attr('number', {
     defaultValue: getDefaultDate
-  }),
-
-  currentRating: Em.computed('title', function () {
-    return Math.ceil(Math.random() * 5);
-  }),
-
-  getAllRatings() {
-    this.getRatingsContainer()
-      .then(ratingsContainer => {
-        return ratingsContainer.getRatings();
-      });
-  },
-
-  getRatingsContainer() {
-    return this.get('ratableContent')
-      .then((ratableContent) => {
-        if (!ratableContent) {
-          ratableContent = this.store.createRecord('ratable-content', {
-            recommendation: this
-          });
-          return ratableContent.save();
-        }
-        return ratableContent;
-      });
-  },
-
-  getAverageRating() {
-    return this.getRatingsContainer()
-      .then(ratingsContainer => ratingsContainer.getAverageRating());
-  }
-
+  })
 });

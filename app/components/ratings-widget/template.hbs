@@ -2,12 +2,15 @@
 
 <div class="starRating {{if memberCanVote 'signed-in'}}">
   <span class="rating">
-    <span class={{if-equal rating 5 'rated-as'}} {{action 'setNewRatingValue' 5}}>☆</span>
-    <span class={{if-equal rating 4 'rated-as'}} {{action 'setNewRatingValue' 4}}>☆</span>
-    <span class={{if-equal rating 3 'rated-as'}} {{action 'setNewRatingValue' 3}}>☆</span>
-    <span class={{if-equal rating 2 'rated-as'}} {{action 'setNewRatingValue' 2}}>☆</span>
-    <span class={{if-equal rating 1 'rated-as'}} {{action 'setNewRatingValue' 1}}>☆</span>
+    <span class="{{if-lte 5 rating 'rated-as' 'unrated'}} {{if-lte 5 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 5}}>☆</span>
+    <span class="{{if-lte 4 rating 'rated-as' 'unrated'}} {{if-lte 4 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 4}}>☆</span>
+    <span class="{{if-lte 3 rating 'rated-as' 'unrated'}} {{if-lte 3 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 3}}>☆</span>
+    <span class="{{if-lte 2 rating 'rated-as' 'unrated'}} {{if-lte 2 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 2}}>☆</span>
+    <span class="{{if-lte 1 rating 'rated-as' 'unrated'}} {{if-lte 1 memberRating 'member-rated-as'}}" {{action 'setNewRatingValue' 1}}>☆</span>
   </span>
+
+  <span>Average: {{rating}} <br>
+    Member: {{memberRating}}</span>
 
 
 

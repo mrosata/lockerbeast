@@ -1,19 +1,7 @@
-import Model from 'ember-data/model';
-import attr from 'ember-data/attr';
-import { hasMany, belongsTo } from 'ember-data/relationships';
-import {getDefaultDate} from 'lockerbeast/utils/date-tools';
+import Em from 'ember';
 
-export default Model.extend({
-  name: attr('string'),
-  category: belongsTo('category', {inverse: null}),
-  comments: hasMany('comment'),
-  image: attr('array'),
-  created: attr('number', {
-    defaultValue: getDefaultDate
-  }),
-  member: belongsTo('member'),
-  ratings: hasMany('rating', {inverse: null}),
-  
+export default Em.Mixin.create({
+
   getAllRatings() {
     this.getRatingsContainer()
       .then(ratingsContainer => {
@@ -25,8 +13,11 @@ export default Model.extend({
     return this.get('ratableContent')
       .then((ratableContent) => {
         if (!ratableContent) {
+          alert(get(this, 'constructor.modelName'));
           ratableContent = this.store.createRecord('ratable-content', {
-            recommendation: this
+            // Need to dynamically create this property
+            // ['review'] or ['recommendation'] or ['article']
+            [get(this, 'constructor.modelName')]: this
           });
           return ratableContent.save();
         }
@@ -38,5 +29,6 @@ export default Model.extend({
     return this.getRatingsContainer()
       .then(ratingsContainer => ratingsContainer.getAverageRating());
   }
+
 
 });

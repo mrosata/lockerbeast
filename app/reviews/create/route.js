@@ -84,7 +84,7 @@ export default Em.Route.extend({
 
   actions: {
     onSubmitForm(formValues) {
-      this.recordFactory.createNew('recommendation', formValues).then();
+      this.recordFactory.createNew('review', formValues).then();
     }
   }
 });

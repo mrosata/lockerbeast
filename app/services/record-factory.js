@@ -43,15 +43,25 @@ export default Em.Service.extend({
 
 
   createReview(modelValues) {
+    const store = get(this, 'store');
+    let categoryId = modelValues.category || null;
     let member = modelValues.member;
+    let tags = modelValues.tags || [];
+
     if (!member) {
-      return Em.RSVP.reject(new Error("Reviews must have a member property!"));
+      return Em.RSVP.reject(
+        new Error("Reviews must have a member property!"));
     }
 
-    let review = get(this, 'store')
-      .createRecord('review', modelValues);
+    let review = store
+      .createRecord('review', {
+        title: modelValues.title,
+        body: modelValues.body,
+        date: modelValues.date,
+        image: modelValues.image
+      });
 
-    return review.save().then(attachMemberToModel(member));
+    return this.saveRecordAttachTagsAndLinkCategory(review, member, categoryId, tags);
   },
 
 
@@ -74,7 +84,23 @@ export default Em.Service.extend({
         image: modelValues.image
       });
 
-    const recSave = recommendation.save();
+    return this.saveRecordAttachTagsAndLinkCategory(recommendation, member, categoryId, tags);
+  },
+
+
+  /**
+   * Work for attaching member to record, record to member, category and tags as
+   * well. This method does all the work including finding the category and
+   * creating/finding any tags in the DB.
+   *
+   * @param recordToStore
+   * @param member
+   * @param categoryId
+   * @param tags
+   * @returns {Promise}
+   */
+  saveRecordAttachTagsAndLinkCategory(recordToStore, member, categoryId, tags) {
+    const recSave = recordToStore.save();
 
     return recSave.then((record) => {
       const attachToModel = pushHasManyToModel(record, 'tags');
@@ -94,6 +120,12 @@ export default Em.Service.extend({
   },
 
 
+  /**
+   * Create an array of tag records
+   * All tags are created if not found in search
+   * @param tags
+   * @returns {Promise|{}|Array}
+   */
   rsvpFindOrCreateArrayOfTags (tags) {
     const store = get(this, 'store');
     return Em.RSVP.Promise.all(
@@ -104,6 +136,11 @@ export default Em.Service.extend({
   },
 
 
+  /**
+   * Look up a category by ID
+   * @param categoryId
+   * @returns {*|Promise|{}|Object|T}
+   */
   findCategoryById(categoryId) {
     return get(this, 'store')
       .find('category', categoryId);

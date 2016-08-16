@@ -14,13 +14,10 @@ export default Em.Route.extend({
 
   setupController() {
     this._super(...arguments);
-    Em.set.apply(this, [this, 'controller.headlineInfo', headlineInfo]);
-    Em.set.apply(this, [this, 'controller.model', Em.get.apply(this, [this, 'context'])]);
-    Em.set.apply(this, [this, 'controller.actions', Em.get.call(this, this, 'actions')]);
-    /*this.set('controller.model', get(this, 'context'));
-    this.set('controller.actions', get(this, 'actions'));
-    this.set('controller.headlineInfo', headlineInfo);
-  */},
+    set(this, 'controller.model', get(this, 'context'));
+    set(this, 'controller.actions', get(this, 'actions'));
+    set(this, 'controller.headlineInfo', headlineInfo);
+  },
 
   actions: {
     onSubmitForm(formValues) {

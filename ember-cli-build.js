@@ -28,7 +28,7 @@ module.exports = function(defaults) {
   // JavaScript Imports
   app.import({
     development: 'bower_components/jquery-ui/jquery-ui.js',
-    production: 'bower_components/jquery-ui/jquery.min.js'
+    production: 'bower_components/jquery-ui/jquery-ui.min.js'
   });
 
   app.import({

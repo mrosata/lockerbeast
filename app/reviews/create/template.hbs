@@ -1,1 +1,13 @@
-{{outlet}}
+
+{{#super-form
+formFields=model.formFields
+passThrough=model.passThroughFields
+submitBtnClass='btn btn-primary'
+onSubmit=(action 'onSubmitForm')}}
+
+{{!-- Headline --}}
+  {{headline-row letter="AR" icon="sport" text="Create New Review"}}
+
+{{/super-form}}
+
+{{liquid-outlet}}

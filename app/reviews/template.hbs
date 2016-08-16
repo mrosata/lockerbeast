@@ -1,1 +1,8 @@
-{{outlet}}
+<section class="col-md-9 col-sm-12 section-main-content">
+  {{liquid-outlet}}
+</section>
+
+<section class="col-md-9 col-sm-12 section-main-content">
+  {{!-- Show the recommendation listings (Most Recent) --}}
+  {{list-items items=model headline=headlineInfo listStyle='review'}}
+</section>

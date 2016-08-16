@@ -2,7 +2,9 @@
 
 # compiled output
 /dist
+/lbApp
 /tmp
+lbApp.zip
 
 # dependencies
 /node_modules

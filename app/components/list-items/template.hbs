@@ -1,5 +1,5 @@
 {{!-- Headline --}}
-{{headline-row letter=headline.icon icon=headline.icon text=headline.text}}
+{{headline-row letter=headline.letter icon=headline.icon text=headline.text}}
 
 {{yield}}
 
@@ -25,8 +25,17 @@
 {{! Recommendation (image & text) should use tagName='section' class='col-md-12 section-post-related'}}
 
   {{#each items as |item|}}
-    {{log item}}
     {{list-items/recommendation item=item maxLength=maxLength}}
+  {{/each}}
+
+{{/if}}
+
+
+{{#if ('is-equal' listStyle 'review')}}
+{{! Review (image & text) should use tagName='section' class='col-md-12 section-post-related'}}
+
+  {{#each items as |item|}}
+    {{list-items/review item=item maxLength=maxLength}}
   {{/each}}
 
 {{/if}}

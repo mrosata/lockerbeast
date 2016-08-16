@@ -1,4 +1,5 @@
 import Em from 'ember';
+import {findFromStore} from 'lockerbeast/utils/ember-fp';
 
 export default Em.Component.extend({
   auth: Em.inject.service(),
@@ -15,7 +16,7 @@ export default Em.Component.extend({
     return get(this, 'store').find('member', get(this, 'session.uid'));
   }),
 
-  memberCanVote: false,
+  memberCanVote: Em.computed.bool('session.isAuthenticated'),
 
   didReceiveAttrs() {
     let item = get(this, 'model');
@@ -43,7 +44,7 @@ export default Em.Component.extend({
             let rating = get(this, 'store')
               .createRecord('rating', {
                 item: ratingsContainer,
-                value: get(this, 'newRatingValue'),
+                value: get(this, 'memberRating'),
                 date: moment.utc().unix()
               });
 
@@ -72,7 +73,8 @@ export default Em.Component.extend({
     },
 
     setNewRatingValue(val) {
-      set(this, 'newRatingValue', val);
+      set(this, 'memberRating', val);
+      this.addNewRating();
     }
   }
 
